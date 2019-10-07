@@ -2,19 +2,22 @@ from git import Repo, Git
 import sys
 import os
 import re
+import json
 
 CODE_VERSION = sys.argv[2]
 GIT_BASE_URL = "git://github.com/"
 CLONE_BASE_PATH = f"src/{CODE_VERSION}"
 
-def read_git_url_file():
-    return [item.replace("\n", "") for item in open(sys.argv[1], 'r').readlines()]
+def read_git_url_json():
+    with open(sys.argv[1]) as git_urls:
+        return json.load(git_urls)
 
-def update_repos(path_list, code_version):
-    for path in path_list:
-        student_name = path.split("/")[0]
+def update_repos(students, code_version):
+    for student in students:
+        student_name = student["student_username"]
+        student_repo = student["repository_name"]
         clone_path = f"{CLONE_BASE_PATH}/{student_name}"
-        git_path = f"{GIT_BASE_URL}{path}.git"
+        git_path = f"{GIT_BASE_URL}{student_name}/{student_repo}.git"
 
         if (os.path.isdir(f"{clone_path}/.git")):
             checkout_version(clone_path, student_name, code_version)
@@ -28,6 +31,8 @@ def checkout_version(clone_path, student_name, code_version):
     
     if latest_version != '0':
         Git(clone_path).checkout(latest_version)
+    else:
+        print("student {student_name} does not have this version available!")
 
 def get_latest_minor_release(cur_repo, code_version):
     f_code_ver = re.sub("[a-zA-Z]+", "", code_version)
@@ -41,4 +46,4 @@ def clone_repo(student_name, clone_path, git_path, code_version):
         Repo.clone_from(git_path, clone_path)
 
 if __name__ == "__main__":
-    update_repos(read_git_url_file(), CODE_VERSION)
+    update_repos(read_git_url_json(), CODE_VERSION)
