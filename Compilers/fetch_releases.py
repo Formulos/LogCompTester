@@ -6,7 +6,7 @@ import json
 
 CODE_VERSION = sys.argv[2]
 GIT_BASE_URL = "git://github.com/"
-CLONE_BASE_PATH = f"src/{CODE_VERSION}"
+CLONE_BASE_PATH = f"src/"
 
 def read_git_url_json():
     with open(sys.argv[1]) as git_urls:
@@ -19,10 +19,10 @@ def update_repos(students, code_version):
         clone_path = f"{CLONE_BASE_PATH}/{student_name}"
         git_path = f"{GIT_BASE_URL}{student_name}/{student_repo}.git"
 
-        if (os.path.isdir(f"{clone_path}/.git")):
-            checkout_version(clone_path, student_name, code_version)
-        else:
+        if (not os.path.isdir(f"{clone_path}/.git")):
             clone_repo(student_name, clone_path, git_path, code_version)
+            
+        checkout_version(clone_path, student_name, code_version)
 
 def checkout_version(clone_path, student_name, code_version):
     cur_repo = Repo(clone_path)
@@ -32,7 +32,7 @@ def checkout_version(clone_path, student_name, code_version):
     if latest_version != '0':
         Git(clone_path).checkout(latest_version)
     else:
-        print("student {student_name} does not have this version available!")
+        print(f"student {student_name} does not have this version available!")
 
 def get_latest_minor_release(cur_repo, code_version):
     f_code_ver = re.sub("[a-zA-Z]+", "", code_version)
