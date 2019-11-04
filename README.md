@@ -3,13 +3,18 @@ Repositorio de ferramentas de avaliacao de compiladores feitos na materia
 
 ## Como rodar:
 
-1. copiar path do github dos compiladores dos alunos no arquivo git_paths.txt (ex: aluno1/compilador);
-2. Para puxar a release x.x de cada um, basta usar, por exemplo:
+0. Instalar python (versão 3.7 ou acima) e a dependência gitPython:
 ```
-$ ./get_releases.sh 2.2
+$ pip install gitpython
 ```
 
-Isso criara uma pasta da release x.x com uma pasta por aluno, contendo o compilador. Na pasta da release tambem havera um template para avaliacao por aluno,casos eja necessario submeter uma issue. Sarquivos de feedback criados nao serao substituidos;
+1. copiar path do github dos compiladores dos alunos em um arquivo json;
+2. Para puxar a release x.x de cada um, basta usar, por exemplo:
+```
+$ python fetch_releases.py git_paths.json 2.0
+```
+
+Isso criara uma pasta da release src/x.x com uma pasta por aluno, contendo o codigo fonte de compilador.
 
 3. Para rodar testes de input de string no terminal, use, por exemplo:
 ```
