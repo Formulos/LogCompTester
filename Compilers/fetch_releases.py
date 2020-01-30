@@ -4,15 +4,26 @@ import os
 import re
 import json
 
+"""
+important:
+the update function delete all local changes
+"""
+
 CODE_VERSION = sys.argv[2]
-GIT_BASE_URL = "git://github.com/"
+GIT_BASE_URL = "git@github.com:"
 CLONE_BASE_PATH = f"src/"
+
+# get ssh key
+git_ssh_identity_file = os.path.expanduser('~/.ssh/id_rsa')
+git_ssh_cmd = 'ssh -i %s' % git_ssh_identity_file
+old_env = Git().custom_environment(GIT_SSH_COMMAND=git_ssh_cmd) #make git use said ssh key
+# old_env = environment before the use of ssh key
 
 def read_git_url_json():
     with open(sys.argv[1]) as git_urls:
         return json.load(git_urls)
 
-def update_repos(students, code_version):
+def update_repos(students, code_version): 
     for student in students:
         student_name = student["student_username"]
         student_repo = student["repository_name"]
@@ -21,14 +32,22 @@ def update_repos(students, code_version):
 
         if (not os.path.isdir(f"{clone_path}/.git")):
             clone_repo(student_name, clone_path, git_path, code_version)
-            
+        
+        else:
+            print(clone_path)
+            cur_repo = Repo(clone_path)
+            cur_repo.git.reset('--hard','origin/master')
+            cur_repo.remotes.origin.pull("master:master")
+        
+
         checkout_version(clone_path, student_name, code_version)
 
 def checkout_version(clone_path, student_name, code_version):
     cur_repo = Repo(clone_path)
+    
+
     latest_version = get_latest_minor_release(cur_repo, code_version)
     print(f"checking out version {latest_version} from {student_name}")
-    
     if latest_version != '0':
         Git(clone_path).checkout(latest_version)
     else:
@@ -43,6 +62,7 @@ def get_latest_minor_release(cur_repo, code_version):
 
 def clone_repo(student_name, clone_path, git_path, code_version):
         print(f"cloning from {student_name}")
+        print(clone_path)
         Repo.clone_from(git_path, clone_path)
 
 if __name__ == "__main__":
