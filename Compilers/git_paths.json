@@ -1,7 +1,8 @@
 [
     {
         "student_username": "antoniosigrist",
-        "repository_name" : "Compilador_Log_Comp"
+        "repository_name" : "Compilador_Log_Comp",
+	"Language" : "Python"
     },
     {
         "student_username": "AToyama",
