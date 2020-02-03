@@ -34,6 +34,7 @@ Se o aluno nao deu o release ou errou a tag da release, seu template de review d
 
 
 versão 2.0 - Essa parte esta incompleta
+
 o ghi esta impedindo o projeto de ser realmente automatico ja que precisa configurar ele, e ele não suporta uma chave ssh
 
 installar ghi
