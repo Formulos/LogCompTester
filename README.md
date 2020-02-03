@@ -29,3 +29,14 @@ $./run_test_files.sh 2.0-tests/ 2.0/aluno1/
 Assume-se que o aluno possui um arquivo main.py no diretorio raiz de seu compilador. 
 
 Se o aluno nao deu o release ou errou a tag da release, seu template de review devera estar vazio
+
+
+versão 2.0 - incompleto
+
+installar ghi
+gem install ghi
+
+parece que funciona com pip mas não tenho certeza
+
+ghi config --auth "username"
+

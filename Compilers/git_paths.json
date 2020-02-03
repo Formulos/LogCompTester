@@ -1,75 +1,12 @@
 [
     {
-        "student_username": "antoniosigrist",
-        "repository_name" : "Compilador_Log_Comp",
-	"Language" : "Python"
-    },
-    {
-        "student_username": "AToyama",
-        "repository_name" : "toy_compiler"
-    },
-    {
-        "student_username": "BrunaKimura",
-        "repository_name" : "LogiComp_Bruna"
-    },
-    {
-        "student_username": "chends888",
-        "repository_name" : "CompLog"
-    },
-    {
-        "student_username": "eduardotp1",
-        "repository_name" : "Compilador"
-    },
-    {
-        "student_username": "elisamalzoni",
-        "repository_name" : "LogicaDaComputacaoElisa"
-    },
-    {
         "student_username": "Formulos",
-        "repository_name" : "logica-compilador-p"
+        "repository_name" : "test_private",
+	"language" : "python"
     },
     {
-        "student_username": "gabsmoreira",
-        "repository_name" : "compiler"
-    },
-    {
-        "student_username": "guizg",
-        "repository_name" : "CompiladorGraicer"
-    },
-    {
-        "student_username": "hugosoftdev",
-        "repository_name" : "LogicaDeComputacao"
-    },
-    {
-        "student_username": "IsabellaRO",
-        "repository_name" : "Compilador_Isabella"
-    },
-    {
-        "student_username": "Leostayner",
-        "repository_name" : "Compilador-LM"
-    },
-    {
-        "student_username": "Lightclawjl",
-        "repository_name" : "LogComp"
-    },
-    {
-        "student_username": "martimfj",
-        "repository_name" : "VBA-Compiler"
-    },
-    {
-        "student_username": "pedrodelapena",
-        "repository_name" : "Compyler"
-    },
-    {
-        "student_username": "raphacosta27",
-        "repository_name" : "raphael_compiler"
-    },
-    {
-        "student_username": "sabrinasimao",
-        "repository_name" : "my_first_compiler"
-    },
-    {
-        "student_username": "Yiaannn",
-        "repository_name" : "LogiComp-2019-1"
+        "student_username": "MichaTC",
+        "repository_name" : "teste",
+	"language" : "python"
     }
 ]

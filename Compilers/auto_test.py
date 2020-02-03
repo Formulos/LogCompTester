@@ -42,6 +42,7 @@ def test_main(person,DIR):
 
     if failed_test:
         report_writer(report,person)
+        auto_issue(person,report)
 
 
 def assertEquals(var1, var2):
@@ -66,9 +67,13 @@ def delete_old_reports():
         os.remove(os.path.join("reports/", f))
 
 def report_writer(report,person):
-    person_file = "reports/relatorio_{!s}.txt".format(person)
+    person_file = "reports/{!s}.txt".format(person)
     with open(person_file, 'w') as file:
         file.write(report)
+
+def auto_issue(person,text):
+    subprocess.run(["ghi", "open","-m","autoIssue\n"+text],cwd="src/{!s}".format(p))
+
 
 def read_git_url_json():
     with open("git_paths.json") as git_urls:
@@ -84,7 +89,8 @@ if __name__ == '__main__':
 
     for student in json_file:
         p = student["student_username"]
-        #language = student["language"]
+        language = student["language"]
+        
 
         print(p)
         test_main(p,test_dir)
