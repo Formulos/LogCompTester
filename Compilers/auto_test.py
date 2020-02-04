@@ -42,8 +42,8 @@ def test_main(person,DIR):
 
     if failed_test:
         report_writer(report,person)
-        auto_issue(person,report)
-
+        
+    return failed_test
 
 def assertEquals(var1, var2):
     return var1 == var2
@@ -61,18 +61,10 @@ def get_program_output(data,src_file):
 
     return text
 
-def delete_old_reports():
-    filelist = [ f for f in os.listdir("reports/") if f.endswith(".txt") ]
-    for f in filelist:
-        os.remove(os.path.join("reports/", f))
-
 def report_writer(report,person):
     person_file = "reports/{!s}.txt".format(person)
     with open(person_file, 'w') as file:
         file.write(report)
-
-def auto_issue(person,text):
-    subprocess.run(["ghi", "open","-m","autoIssue\n"+text],cwd="src/{!s}".format(p))
 
 
 def read_git_url_json():
@@ -82,7 +74,6 @@ def read_git_url_json():
 
 if __name__ == '__main__':
     test_dir = "tests/1.0_tests"
-    delete_old_reports()
 
     json_file = read_git_url_json()
 
@@ -91,6 +82,10 @@ if __name__ == '__main__':
         p = student["student_username"]
         language = student["language"]
         
+        print(not os.path.exists("reports/{!s}.txt".format(p)))
+        if (not os.path.exists("reports/{!s}.txt".format(p))):
+            print(p)
+            test_main(p,test_dir)
 
-        print(p)
-        test_main(p,test_dir)
+            #report_writer(report,person)
+            #auto_issue(person,report)

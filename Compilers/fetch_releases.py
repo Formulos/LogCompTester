@@ -6,7 +6,7 @@ import json
 
 """
 important:
-the update function delete all local changes
+the update function deletes all local changes
 """
 
 CODE_VERSION = sys.argv[2]
@@ -52,6 +52,7 @@ def checkout_version(clone_path, student_name, code_version):
         Git(clone_path).checkout(latest_version)
     else:
         print(f"student {student_name} does not have this version available!")
+        report_writer("Release {!s} não encontrada!".format(code_version),student_name)
 
 def get_latest_minor_release(cur_repo, code_version):
     f_code_ver = re.sub("[a-zA-Z]+", "", code_version)
@@ -65,5 +66,16 @@ def clone_repo(student_name, clone_path, git_path, code_version):
         print(clone_path)
         Repo.clone_from(git_path, clone_path)
 
+def delete_old_reports():
+    filelist = [ f for f in os.listdir("reports/") if f.endswith(".txt") ]
+    for f in filelist:
+        os.remove(os.path.join("reports/", f))
+
+def report_writer(report,person):
+    person_file = "reports/{!s}.txt".format(person)
+    with open(person_file, 'w') as file:
+        file.write(report)
+
 if __name__ == "__main__":
+    delete_old_reports()
     update_repos(read_git_url_json(), CODE_VERSION)
