@@ -52,7 +52,7 @@ def checkout_version(clone_path, student_name, code_version):
         Git(clone_path).checkout(latest_version)
     else:
         print(f"student {student_name} does not have this version available!")
-        report_writer("Release {!s} não encontrada!".format(code_version),student_name)
+        report_writer("Aluno: {!s}\nRelease {!s} não encontrada!".format(student_name,code_version),student_name)
 
 def get_latest_minor_release(cur_repo, code_version):
     f_code_ver = re.sub("[a-zA-Z]+", "", code_version)

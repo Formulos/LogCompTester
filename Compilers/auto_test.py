@@ -6,7 +6,7 @@ import json
 
 
 
-def test_main(person,DIR):
+def test_main(person,DIR,language):
     
     size_test = (len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])) //2
     src_file = "src/{!s}/main.py".format(person)
@@ -22,7 +22,12 @@ def test_main(person,DIR):
         data = get_text(test_file)
         data_encoded = str.encode(data)
 
-        output = get_program_output(data_encoded,src_file)
+        output = get_program_output(data_encoded,src_file,language)
+
+        if output == "":
+            report += "Error: main file not found\n"
+            report_writer(report,person)
+            return True
 
         sol = get_text(sol_file)
         sol = os.linesep.join([s for s in sol.splitlines() if s])
@@ -42,7 +47,7 @@ def test_main(person,DIR):
 
     if failed_test:
         report_writer(report,person)
-        
+
     return failed_test
 
 def assertEquals(var1, var2):
@@ -53,8 +58,12 @@ def get_text(test_file):
         data = file.read()
     return data
 
-def get_program_output(data,src_file):
-    output = subprocess.run(["python3",src_file],input = data,stderr=subprocess.PIPE,stdout=subprocess.PIPE)
+def get_program_output(data,src_file,language):
+    if language =="python3":
+        args = ["python3",src_file]
+
+    output = subprocess.run(args,input = data,stderr=subprocess.PIPE,stdout=subprocess.PIPE)
+
     text = output.stdout.decode("utf-8")
     text = os.linesep.join([s for s in text.splitlines() if s])
     text.strip()
@@ -74,6 +83,7 @@ def read_git_url_json():
 
 if __name__ == '__main__':
     test_dir = "tests/1.0_tests"
+    acepeted_languages = ["python3"]
 
     json_file = read_git_url_json()
 
@@ -82,10 +92,10 @@ if __name__ == '__main__':
         p = student["student_username"]
         language = student["language"]
         
+        if (language not in acepeted_languages):
+            raise Exception("language {!s} is not a acepeted language!".format(language))
+        
         print(not os.path.exists("reports/{!s}.txt".format(p)))
         if (not os.path.exists("reports/{!s}.txt".format(p))):
             print(p)
-            test_main(p,test_dir)
-
-            #report_writer(report,person)
-            #auto_issue(person,report)
+            test_main(p,test_dir,language)
