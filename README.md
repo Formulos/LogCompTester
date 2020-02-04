@@ -31,7 +31,11 @@ Assume-se que o aluno possui um arquivo main.py no diretorio raiz de seu compila
 Se o aluno nao deu o release ou errou a tag da release, seu template de review devera estar vazio
 
 
-versão 2.0 - incompleto
+
+
+versão 2.0 - Essa parte esta incompleta
+
+o ghi esta impedindo o projeto de ser realmente automatico ja que precisa configurar ele, e ele não suporta uma chave ssh
 
 installar ghi
 gem install ghi
