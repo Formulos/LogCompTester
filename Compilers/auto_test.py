@@ -30,9 +30,9 @@ def test_main(person,DIR,language):
             return True
 
         sol = get_text(sol_file)
-        sol = os.linesep.join([s for s in sol.splitlines() if s])
+        sol = text_processor(sol)
 
-        first_digit = re.search(r"\d", output)
+        first_digit = re.search(r"\d", output) #lida com texto aleatorio das versão 1.0
         first_digit = first_digit.start()
         output = output[first_digit:]
 
@@ -65,6 +65,11 @@ def get_program_output(data,src_file,language):
     output = subprocess.run(args,input = data,stderr=subprocess.PIPE,stdout=subprocess.PIPE)
 
     text = output.stdout.decode("utf-8")
+    text = text_processor(text)
+
+    return text
+
+def text_processor(text):
     text = os.linesep.join([s for s in text.splitlines() if s])
     text.strip()
 
@@ -83,7 +88,7 @@ def read_git_url_json():
 
 if __name__ == '__main__':
     test_dir = "tests/1.0_tests"
-    acepeted_languages = ["python3"]
+    acepeted_languages = ["python3","C#"]
 
     json_file = read_git_url_json()
 
@@ -91,11 +96,16 @@ if __name__ == '__main__':
     for student in json_file:
         p = student["student_username"]
         language = student["language"]
+
+        
         
         if (language not in acepeted_languages):
             raise Exception("language {!s} is not a acepeted language!".format(language))
+
+        if (language != "python3"):
+            continue
         
-        print(not os.path.exists("reports/{!s}.txt".format(p)))
         if (not os.path.exists("reports/{!s}.txt".format(p))):
             print(p)
-            test_main(p,test_dir,language)
+            error = test_main(p,test_dir,language)
+            print(error)
