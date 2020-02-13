@@ -1,12 +1,8 @@
 [
     {
-        "student_username": "Formulos",
-        "repository_name" : "test_private",
-	"language" : "python3"
-    },
-    {
-        "student_username": "MichaTC",
-        "repository_name" : "teste",
-	"language" : "python3"
+        "student_username": "decoejz",
+        "repository_name" : "compilador",
+        "language" : "python3",
+        "run_args": "python3"
     }
 ]

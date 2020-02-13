@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import re
 import json
@@ -6,7 +7,7 @@ import json
 
 
 
-def test_main(person,DIR,language):
+def test_main(person,DIR,language,args):
     
     size_test = (len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])) //2
     src_file = "src/{!s}/main.py".format(person)
@@ -27,6 +28,7 @@ def test_main(person,DIR,language):
         if output == "":
             report += "Error: main file not found\n"
             report_writer(report,person)
+            print(output)
             return True
 
         sol = get_text(sol_file)
@@ -60,7 +62,7 @@ def get_text(test_file):
 
 def get_program_output(data,src_file,language):
     if language =="python3":
-        args = ["python3",src_file]
+        args = ["python3",src_file,data]
 
     output = subprocess.run(args,input = data,stderr=subprocess.PIPE,stdout=subprocess.PIPE)
 
@@ -87,7 +89,7 @@ def read_git_url_json():
 
 
 if __name__ == '__main__':
-    test_dir = "tests/1.0_tests"
+    test_dir = "tests/{!s}_tests".format(sys.argv[1])
     acepeted_languages = ["python3","C#"]
 
     json_file = read_git_url_json()
@@ -96,16 +98,17 @@ if __name__ == '__main__':
     for student in json_file:
         p = student["student_username"]
         language = student["language"]
+        args = student["run_args"].split
 
         
         
         if (language not in acepeted_languages):
             raise Exception("language {!s} is not a acepeted language!".format(language))
 
-        if (language != "python3"):
+        if (language != "python3"): #tmp
             continue
         
         if (not os.path.exists("reports/{!s}.txt".format(p))):
             print(p)
-            error = test_main(p,test_dir,language)
+            error = test_main(p,test_dir,language,args)
             print(error)
