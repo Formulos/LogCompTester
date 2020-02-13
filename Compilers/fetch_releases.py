@@ -45,8 +45,12 @@ def update_repos(students, code_version):
 def checkout_version(clone_path, student_name, code_version):
     cur_repo = Repo(clone_path)
     
+    try:
+        latest_version = get_latest_minor_release(cur_repo, code_version)
+    except:
+        print("Could not get the latest version, does this student have any releases available?")
+        return
 
-    latest_version = get_latest_minor_release(cur_repo, code_version)
     print(f"checking out version {latest_version} from {student_name}")
     if latest_version != '0':
         Git(clone_path).checkout(latest_version)

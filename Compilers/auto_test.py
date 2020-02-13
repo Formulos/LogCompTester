@@ -10,20 +10,23 @@ import json
 def test_main(person,DIR,language,args):
     
     size_test = (len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])) //2
-    src_file = "src/{!s}/main.py".format(person)
+    src_file = "src/{!s}".format(person)
 
     report = "Aluno: {!s}\n \n".format(person)
 
     failed_test = False
+
+    args.append("")
 
     for i in range(1,size_test + 1):
         test_file = DIR +"/teste{!s}.txt".format(i)
         sol_file = DIR +"/sol{!s}.txt".format(i)
 
         data = get_text(test_file)
-        data_encoded = str.encode(data)
+        args[-1] = data
+        #data_encoded = str.encode(data)
 
-        output = get_program_output(data_encoded,src_file,language)
+        output = get_program_output(src_file,language,args)
 
         if output == "":
             report += "Error: main file not found\n"
@@ -38,7 +41,7 @@ def test_main(person,DIR,language,args):
         first_digit = first_digit.start()
         output = output[first_digit:]
 
-        result = assertEquals(int(sol), int(output))
+        result = assertEquals(sol, output)
         if result:
             report += "teste{!s}: ok\n \n".format(str(i))
         else:
@@ -60,11 +63,11 @@ def get_text(test_file):
         data = file.read()
     return data
 
-def get_program_output(data,src_file,language):
-    if language =="python3":
-        args = ["python3",src_file,data]
+def get_program_output(src_file,language,args):
+    #if language =="python3":
+    #    args = ["python3",src_file,data]
 
-    output = subprocess.run(args,input = data,stderr=subprocess.PIPE,stdout=subprocess.PIPE)
+    output = subprocess.run(args,cwd=src_file,stderr=subprocess.PIPE,stdout=subprocess.PIPE)
 
     text = output.stdout.decode("utf-8")
     text = text_processor(text)
@@ -90,7 +93,7 @@ def read_git_url_json():
 
 if __name__ == '__main__':
     test_dir = "tests/{!s}_tests".format(sys.argv[1])
-    acepeted_languages = ["python3","C#"]
+    acepeted_languages = ["python3","C++","C#"]
 
     json_file = read_git_url_json()
 
@@ -98,17 +101,16 @@ if __name__ == '__main__':
     for student in json_file:
         p = student["student_username"]
         language = student["language"]
-        args = student["run_args"].split
-
-        
+        args = student["run_args"]
+        args = args.split()
         
         if (language not in acepeted_languages):
             raise Exception("language {!s} is not a acepeted language!".format(language))
 
-        if (language != "python3"): #tmp
+        if (language != "python3"): #tmp perigoso
             continue
         
         if (not os.path.exists("reports/{!s}.txt".format(p))):
             print(p)
             error = test_main(p,test_dir,language,args)
-            print(error)
+            print("algum erro?: ",error)

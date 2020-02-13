@@ -1,8 +1,86 @@
 [
     {
+        "student_username": "LiuSeeker",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 main.py",
+        "language" : "python3"
+    },
+    {
         "student_username": "decoejz",
         "repository_name" : "compilador",
-        "language" : "python3",
-        "run_args": "python3"
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "brunoartc",
+        "repository_name" : "THP",
+        "run_args" : "bla",
+	    "language" : "C++"
+    },
+    {
+        "student_username": "gabriellm1",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "rachelbottino",
+        "repository_name" : "LogicaDaComputacao",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "AntonioAndraues",
+        "repository_name" : "compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "aleblucher",
+        "repository_name" : "compyler",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "Veronur",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "Samuelgranato",
+        "repository_name" : "Compilador_PHP",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "gabrielvf1",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "franciol",
+        "repository_name" : "compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "GustavoGB",
+        "repository_name" : "Compilador_Log",
+        "run_args" : "bla",
+	    "language" : "C++"
+    },
+    {
+        "student_username": "manucirne",
+        "repository_name" : "compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "wesleygas",
+        "repository_name" : "compylador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
     }
 ]
