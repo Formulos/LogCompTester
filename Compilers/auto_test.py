@@ -47,11 +47,17 @@ def test_main(person,DIR,language,args,compile_args):
         sol = get_text(sol_file)
         sol = text_processor(sol)
 
-        first_digit = re.search(r"\d", output) #lida com texto aleatorio das versão 1.0
-        first_digit = first_digit.start()
+        try: #fazer esse try melhor
+            first_digit = re.search(r"\d", output) #lida com texto aleatorio das versão 1.0
+            first_digit = first_digit.start()
+        except: #tratar o erro do mesmo jeito que o outro
+            report += "teste{!s}: falha\n".format(str(i))
+            report += "output esperado: {!s} | output recebido:{!s}\n \n".format(str(sol),str(output))
+            failed_test = True
+            continue
 
-        if output[first_digit-1] == "-": # não se se tem jeito melhor que esse
-            first_digit -= 1 # feito para não iginorar numeros negativos
+        if output[first_digit-1] == "-": # não sei se tem jeito melhor que esse
+            first_digit -= 1 # feito para não ignorar numeros negativos
 
         output = output[first_digit:]
         output = text_processor(output)
