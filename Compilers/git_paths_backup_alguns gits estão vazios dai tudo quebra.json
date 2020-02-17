@@ -25,6 +25,12 @@
 	    "language" : "python3"
     },
     {
+        "student_username": "rachelbottino",
+        "repository_name" : "LogicaDaComputacao",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
         "student_username": "AntonioAndraues",
         "repository_name" : "compilador",
         "run_args" : "python3 main.py",
@@ -63,8 +69,9 @@
     {
         "student_username": "GustavoGB",
         "repository_name" : "Compilador_Log",
-        "run_args" : "python3 main.py",
-	    "language" : "python3"
+        "run_args" : "./a.out",
+        "compile_args" : "g++ main.cpp",
+	    "language" : "C++"
     },
     {
         "student_username": "manucirne",
