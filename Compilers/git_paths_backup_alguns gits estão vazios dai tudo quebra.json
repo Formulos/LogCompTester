@@ -90,5 +90,17 @@
         "repository_name" : "Compilador",
         "run_args" : "python3 main.py",
 	    "language" : "python3"
+    },
+    {
+        "student_username": "ViniGl",
+        "repository_name" : "compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "guipleite",
+        "repository_name" : "LogComp",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
     }
 ]

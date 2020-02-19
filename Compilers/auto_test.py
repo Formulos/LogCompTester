@@ -36,40 +36,54 @@ def test_main(person,DIR,language,args,compile_args):
         args[-1] = data
         #data_encoded = str.encode(data)
 
-        output = get_program_output(src_file,language,args)
+        output,output_error = get_program_output(src_file,language,args)
 
-        if output == "":
-            report += "Error: main file not found\n"
-            report_writer(report,person)
+        if (output == "") and (output_error == ""):
+            report += "teste{!s}: falha\n".format(str(i))
+            report += "input do teste: {!s} ".format(str(data))
+            report += "não recebi nada de output!(stderr e stdout estão vazios e não deveriam)\n"
+            failed_test = True
             #print(output)
-            return True
+            continue
 
         sol = get_text(sol_file)
         sol = text_processor(sol)
 
-        try: #fazer esse try melhor
-            first_digit = re.search(r"\d", output) #lida com texto aleatorio das versão 1.0
-            first_digit = first_digit.start()
-        except: #tratar o erro do mesmo jeito que o outro
-            report += "teste{!s}: falha\n".format(str(i))
-            report += "output esperado: {!s} | output recebido:{!s}\n \n".format(str(sol),str(output))
-            failed_test = True
-            continue
+        if sol != "Error": #cuida dos testes "normais" os que não dão erro
+            try: #fazer esse try melhor
+                first_digit = re.search(r"\d", output) #lida com texto aleatorio das versão 1.0
+                first_digit = first_digit.start()
+            except: #tratar o erro do mesmo jeito que o outro
+                report += "teste{!s}: falha\n".format(str(i))
+                report += "output esperado: {!s} | output recebido:{!s}\n \n".format(str(sol),str(output))
+                failed_test = True
+                continue
 
-        if output[first_digit-1] == "-": # não sei se tem jeito melhor que esse
-            first_digit -= 1 # feito para não ignorar numeros negativos
+            if output[first_digit-1] == "-": # não sei se tem jeito melhor que esse
+                first_digit -= 1 # feito para não ignorar numeros negativos
 
-        output = output[first_digit:]
-        output = text_processor(output)
+            output = output[first_digit:]
+            output = text_processor(output)
 
-        result = assertEquals(sol, output)
-        if result:
-            report += "teste{!s}: ok\n \n".format(str(i))
-        else:
-            report += "teste{!s}: falha\n".format(str(i))
-            report += "input do teste: {!s} ".format(str(data))
-            report += "output esperado: {!s} | output recebido:{!s}\n \n".format(str(sol),str(output))
-            failed_test = True
+            result = assertEquals(sol, output)
+            if not result:
+                report += "teste{!s}: falha\n".format(str(i))
+                report += "input do teste: {!s} ".format(str(data))
+                report += "output esperado: {!s} | output recebido:{!s}\n \n".format(str(sol),str(output))
+                failed_test = True
+            if (output_error):
+                report += "teste{!s}: recebeu um erro inesperado(algo saio no stderr quando não deveria)\n".format(str(i))
+                report += "saida do stderr: {!s} \n \n".format(str(output_error))
+                failed_test = True
+        #cuida dos testes de erro
+        else: #aka sol=Error
+            if (not output_error): # lembrando que strings vazias são falsas
+                # o codigo não gerou um erro quando deveria
+                report += "teste{!s}: falha, não deu erro mais deveria (algo deveria ter saido no stderr)\n".format(str(i))
+                report += "input do teste: \"{!s}\" ele deveria dar erro!\n\n".format(str(data))
+                failed_test = True
+            
+
 
     if failed_test:
         report_writer(report,person)
@@ -91,12 +105,13 @@ def get_program_output(src_file,language,args):
     output = subprocess.run(args,cwd=src_file,stderr=subprocess.PIPE,stdout=subprocess.PIPE)
 
     text = output.stdout.decode("utf-8")
+    text_error = output.stderr.decode("utf-8")
     text = text_processor(text)
 
-    return text
+    return text,text_error
 
 def compile(src_file,compile_args):
-    output = subprocess.run(args,cwd=src_file,stderr=subprocess.PIPE,stdout=subprocess.PIPE)
+    output = subprocess.run(compile_args,cwd=src_file,stderr=subprocess.PIPE,stdout=subprocess.PIPE)
     text = output.stderr.decode("utf-8")
 
     return text
@@ -144,3 +159,4 @@ if __name__ == '__main__':
             print(p)
             error = test_main(p,test_dir,language,args,compile_args)
             print("algum erro?: ",error)
+            print("\n")
