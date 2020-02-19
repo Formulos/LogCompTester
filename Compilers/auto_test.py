@@ -24,7 +24,7 @@ def test_main(person,DIR,language,args,compile_args):
         if output: #strings vazias são falsas
             report += "Error: teste automatico não conseguio compilar arquivo!\n"
             report += "parametros de compilação: {!s}\n".format(" ".join(compile_args))
-            report +=  "erro de compilação:{!s}".format(output)
+            report += "erro de compilação:{!s}".format(output)
             report_writer(report,person)
             return True
 
@@ -55,7 +55,13 @@ def test_main(person,DIR,language,args,compile_args):
                 first_digit = first_digit.start()
             except: #tratar o erro do mesmo jeito que o outro
                 report += "teste{!s}: falha\n".format(str(i))
-                report += "output esperado: {!s} | output recebido:{!s}\n \n".format(str(sol),str(output))
+                report += "O stdout saiu vazio quando não deveria \n"
+                report += "input do teste: {!s} \n".format(str(data))
+                report += "output esperado: {!s} | output recebido:{!s}\n".format(str(sol),str(output))
+                if (output_error):
+                    report += "Mas algo saiu no stderror(que não deveria): \"{!s}\" \n \n".format(str(output_error))
+                else:
+                    report += "\n"
                 failed_test = True
                 continue
 
@@ -68,15 +74,16 @@ def test_main(person,DIR,language,args,compile_args):
             result = assertEquals(sol, output)
             if not result:
                 report += "teste{!s}: falha\n".format(str(i))
-                report += "input do teste: {!s} ".format(str(data))
+                report += "input do teste: {!s} \n".format(str(data))
                 report += "output esperado: {!s} | output recebido:{!s}\n \n".format(str(sol),str(output))
                 failed_test = True
             if (output_error):
                 report += "teste{!s}: recebeu um erro inesperado(algo saio no stderr quando não deveria)\n".format(str(i))
                 report += "saida do stderr: {!s} \n \n".format(str(output_error))
                 failed_test = True
+
         #cuida dos testes de erro
-        else: #aka sol=Error
+        else: #aka if sol=Error
             if (not output_error): # lembrando que strings vazias são falsas
                 # o codigo não gerou um erro quando deveria
                 report += "teste{!s}: falha, não deu erro mais deveria (algo deveria ter saido no stderr)\n".format(str(i))
