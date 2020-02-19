@@ -143,5 +143,11 @@
         "repository_name" : "LogCompCompilador",
         "run_args" : "python3 SimpleCalc.py",
 	    "language" : "python3"
+    },
+    {
+        "student_username": "hugoecarl",
+        "repository_name" : "Compilator ",
+        "run_args" : "python3 compilador.py",
+	    "language" : "python3"
     }
 ]
