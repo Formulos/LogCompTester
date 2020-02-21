@@ -27,7 +27,7 @@
     {
         "student_username": "rachelbottino",
         "repository_name" : "LogicaDaComputacao",
-        "run_args" : "python3 main.py",
+        "run_args" : "python3 roteiro0.py",
 	    "language" : "python3"
     },
     {
@@ -81,7 +81,7 @@
     {
         "student_username": "wesleygas",
         "repository_name" : "compylador",
-        "run_args" : "executaveis/compylador.exe",
+        "run_args" : "executaveis/linux/compylador",
 	    "language" : "C#"
     },
     {
@@ -153,7 +153,7 @@
     {
         "student_username": "nicolasbss",
         "repository_name" : "compilador",
-        "run_args" : "python3 main.py",
+        "run_args" : "python3 roteiro1.py",
 	    "language" : "python3"
     },
     {

@@ -7,7 +7,14 @@ import json
 
 
 
-def test_main(person,DIR,language,args,compile_args):
+def test_main(DIR,student):
+    language = student["language"]
+    person = student["student_username"]
+    args = student["run_args"]
+    args = args.split()
+    
+    if (language not in acepeted_languages):
+        raise Exception("language {!s} is not a acepeted language!".format(language))
     
     size_test = (len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])) //2
     src_file = "src/{!s}".format(person)
@@ -18,7 +25,10 @@ def test_main(person,DIR,language,args,compile_args):
 
     args.append("")
 
-    if language != "python3": #refatorar esse codigo, dois checks iguais
+    if language == "C++": #refatorar esse codigo, dois checks iguais
+        compile_args = student["compile_args"]
+        compile_args = compile_args.split()
+        compile_args.append("-w") #supress warnings
         output = compile(src_file,compile_args)
 
         if output: #strings vazias são falsas
@@ -142,28 +152,17 @@ def read_git_url_json():
 
 if __name__ == '__main__':
     test_dir = "tests/{!s}_tests".format(sys.argv[1])
-    acepeted_languages = ["python3","C++"]
+    acepeted_languages = ["python3","C++","C#"] # C# so funciona se um executavel ja existir
 
     json_file = read_git_url_json()
 
 
     for student in json_file:
-        p = student["student_username"]
-        language = student["language"]
-        args = student["run_args"]
-        args = args.split()
-        compile_args = ""
+        person = student["student_username"]
         
-        if (language not in acepeted_languages):
-            raise Exception("language {!s} is not a acepeted language!".format(language))
-
-        if (language != "python3"): # pegar argumento de compilação
-            compile_args = student["compile_args"]
-            compile_args = compile_args.split()
-            compile_args.append("-w") #supress warnings
         
-        if (not os.path.exists("reports/{!s}.txt".format(p))):
-            print(p)
-            error = test_main(p,test_dir,language,args,compile_args)
+        if (not os.path.exists("reports/{!s}.txt".format(person))):
+            print(person)
+            error = test_main(test_dir,student)
             print("algum erro?: ",error)
             print("\n")
