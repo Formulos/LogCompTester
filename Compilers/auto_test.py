@@ -52,6 +52,7 @@ def test_main(DIR,student):
             report += "teste{!s}: falha\n".format(str(i))
             report += "input do teste: {!s} ".format(str(data))
             report += "Timeout, teste demorou mais de 3 segundo para rodar, assumo que entrou em um loop infinito\n\n"
+            failed_test = True
             
             
 
