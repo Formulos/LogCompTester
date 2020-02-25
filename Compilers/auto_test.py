@@ -25,7 +25,7 @@ def test_main(DIR,student):
 
     args.append("")
 
-    if language == "C++": #refatorar esse codigo, dois checks iguais
+    if language == "C++": #refatorar esse codigo, varias linguas
         compile_args = student["compile_args"]
         compile_args = compile_args.split()
         compile_args.append("-w") #supress warnings
@@ -46,7 +46,14 @@ def test_main(DIR,student):
         args[-1] = data
         #data_encoded = str.encode(data)
 
-        output,output_error = get_program_output(src_file,language,args)
+        try:
+            output,output_error = get_program_output(src_file,language,args)
+        except subprocess.TimeoutExpired:
+            report += "teste{!s}: falha\n".format(str(i))
+            report += "input do teste: {!s} ".format(str(data))
+            report += "Timeout, teste demorou mais de 3 segundo para rodar, assumo que entrou em um loop infinito\n\n"
+            
+            
 
         if (output == "") and (output_error == ""):
             report += "teste{!s}: falha\n".format(str(i))
@@ -59,10 +66,10 @@ def test_main(DIR,student):
         sol = get_text(sol_file)
         sol = text_processor(sol)
 
-        if sol != "Error": #cuida dos testes "normais" os que não dão erro
-            try: #fazer esse try melhor
+        if sol != "Error": #cuida dos testes "normais" (os que não dão erro)
+            try: #esse bloco tenta limpar o output
                 first_digit = re.search(r"\d", output) #lida com texto aleatorio das versão 1.0
-                first_digit = first_digit.start()
+                first_digit = first_digit.start() 
             except: #tratar o erro do mesmo jeito que o outro
                 report += "teste{!s}: falha\n".format(str(i))
                 report += "O stdout saiu vazio quando não deveria \n"
@@ -88,7 +95,7 @@ def test_main(DIR,student):
                 report += "output esperado: {!s} | output recebido:{!s}\n \n".format(str(sol),str(output))
                 failed_test = True
             if (output_error):
-                report += "teste{!s}: recebeu um erro inesperado(algo saio no stderr quando não deveria)\n".format(str(i))
+                report += "teste{!s}: recebeu um erro inesperado (algo saio no stderr quando não deveria)\n".format(str(i))
                 report += "saida do stderr: {!s} \n \n".format(str(output_error))
                 failed_test = True
 
@@ -115,11 +122,11 @@ def get_text(test_file):
         data = file.read()
     return data
 
-def get_program_output(src_file,language,args):
+def get_program_output(src_file,language,args,maxtime=3.0):
     #if language =="python3":
     #    args = ["python3",src_file,data]
 
-    output = subprocess.run(args,cwd=src_file,stderr=subprocess.PIPE,stdout=subprocess.PIPE)
+    output = subprocess.run(args,cwd=src_file,stderr=subprocess.PIPE,stdout=subprocess.PIPE,timeout=maxtime)
 
     text = output.stdout.decode("utf-8")
     text_error = output.stderr.decode("utf-8")
