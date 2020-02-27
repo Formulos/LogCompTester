@@ -25,16 +25,16 @@ def test_main(DIR,student):
 
     args.append("")
 
-    if language == "C++": #refatorar esse codigo, varias linguas
+    if language != "python3": #refatorar esse codigo, varias linguas
         compile_args = student["compile_args"]
         compile_args = compile_args.split()
-        compile_args.append("-w") #supress warnings
-        output = compile(src_file,compile_args)
+        #compile_args.append("-w") #supress C++ warnings
+        compile_err_output = compile(src_file,compile_args)
 
-        if output: #strings vazias são falsas
+        if compile_err_output: #strings vazias são falsas
             report += "Error: teste automatico não conseguio compilar arquivo!\n"
             report += "parametros de compilação: {!s}\n".format(" ".join(compile_args))
-            report += "erro de compilação:{!s}".format(output)
+            report += "erro de compilação:{!s}".format(compile_err_output)
             report_writer(report,person)
             return True
 
@@ -50,15 +50,15 @@ def test_main(DIR,student):
             output,output_error = get_program_output(src_file,language,args)
         except subprocess.TimeoutExpired:
             report += "teste{!s}: falha\n".format(str(i))
-            report += "input do teste: {!s} ".format(str(data))
+            report += "input do teste: \"{!s}\" ".format(str(data))
             report += "Timeout, teste demorou mais de 3 segundo para rodar, assumo que entrou em um loop infinito\n\n"
             failed_test = True
-            
+            continue
             
 
         if (output == "") and (output_error == ""):
             report += "teste{!s}: falha\n".format(str(i))
-            report += "input do teste: {!s} ".format(str(data))
+            report += "input do teste: \"{!s}\" ".format(str(data))
             report += "não recebi nada de output!(stderr e stdout estão vazios e não deveriam)\n"
             failed_test = True
             #print(output)
@@ -67,38 +67,24 @@ def test_main(DIR,student):
         sol = get_text(sol_file)
         sol = text_processor(sol)
 
-        if sol != "Error": #cuida dos testes "normais" (os que não dão erro)
-            try: #esse bloco tenta limpar o output
-                first_digit = re.search(r"\d", output) #lida com texto aleatorio das versão 1.0
-                first_digit = first_digit.start() 
-            except: #tratar o erro do mesmo jeito que o outro
-                report += "teste{!s}: falha\n".format(str(i))
-                report += "O stdout saiu vazio quando não deveria \n"
-                report += "input do teste: {!s} \n".format(str(data))
-                report += "output esperado: {!s} | output recebido:{!s}\n".format(str(sol),str(output))
-                if (output_error):
-                    report += "Mas algo saiu no stderror(que não deveria): \"{!s}\" \n \n".format(str(output_error))
-                else:
-                    report += "\n"
-                failed_test = True
-                continue
+        output = text_processor(output)
+        output_error = text_processor(output_error)
 
-            if output[first_digit-1] == "-": # não sei se tem jeito melhor que esse
-                first_digit -= 1 # feito para não ignorar numeros negativos
-
-            output = output[first_digit:]
-            output = text_processor(output)
+        if sol != "Error": #cuida dos testes "normais" (os que não são de erro)
 
             result = assertEquals(sol, output)
             if not result:
                 report += "teste{!s}: falha\n".format(str(i))
-                report += "input do teste: {!s} \n".format(str(data))
-                report += "output esperado: {!s} | output recebido:{!s}\n \n".format(str(sol),str(output))
+                report += "input do teste: \"{!s}\" \n".format(str(data))
+                report += "output esperado: \"{!s}\" | output recebido: \"{!s}\"\n".format(str(sol),str(output))
                 failed_test = True
-            if (output_error):
-                report += "teste{!s}: recebeu um erro inesperado (algo saio no stderr quando não deveria)\n".format(str(i))
-                report += "saida do stderr: {!s} \n \n".format(str(output_error))
+                if (output_error):
+                    report += "Mas algo saiu no stderror(que não deveria): \"{!s}\"\n\n".format(str(output_error))
+                else:
+                    report += "\n"
                 failed_test = True
+                continue
+    
 
         #cuida dos testes de erro
         else: #aka if sol=Error
@@ -108,7 +94,6 @@ def test_main(DIR,student):
                 report += "input do teste: \"{!s}\" ele deveria dar erro!\n\n".format(str(data))
                 failed_test = True
             
-
 
     if failed_test:
         report_writer(report,person)
@@ -142,7 +127,7 @@ def compile(src_file,compile_args):
     return text
 
 def text_processor(text):
-    text = os.linesep.join([s for s in text.splitlines() if s])
+    text = os.linesep.join([s for s in text.splitlines() if s]) #tira espaços seguidos (\n\n)
     text.strip()
 
     return text
