@@ -59,7 +59,7 @@ def test_main(DIR,student):
         if (output == "") and (output_error == ""):
             report += "teste{!s}: falha\n".format(str(i))
             report += "input do teste: \"{!s}\" ".format(str(data))
-            report += "não recebi nada de output!(stderr e stdout estão vazios e não deveriam)\n"
+            report += "não recebi nada de output!(stderr e stdout estão vazios e não deveriam)\n\n"
             failed_test = True
             #print(output)
             continue

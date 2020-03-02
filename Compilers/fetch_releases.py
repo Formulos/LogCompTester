@@ -36,8 +36,8 @@ def update_repos(students, code_version):
         else:
             print(clone_path)
             cur_repo = Repo(clone_path)
-            cur_repo.git.reset('--hard','origin/master')
-            cur_repo.remotes.origin.pull("master:master")
+            cur_repo.git.reset('--hard')
+            cur_repo.remotes.origin.pull("master")
         
 
         checkout_version(clone_path, student_name, code_version)
