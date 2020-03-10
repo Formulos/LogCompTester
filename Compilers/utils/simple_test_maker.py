@@ -1,10 +1,10 @@
-test = ["1*1","1/1","32*985","3168/99","2+5*4","2*4/2","0/1","8  * 9 / 2","4//2","3**3","8//4**2"]
-sol = ["1","1","31520","32","22","4","0","36","Error","Error","Error"]
+test = ["/* A /* 1 */ 2","/* A */ 1 /* A */","1 + /* 2 */ 3","/* A 1","1 /* A","1 + /* A */ */"]
+sol = ["2","1","4","Error","Error","Error"]
 
 if (len(test) != len(sol)):
     raise Exception("len Sol != test")
 
-init = 12
+init = 24
 counter = init
 while counter < (len(test) +init):
     print(counter)

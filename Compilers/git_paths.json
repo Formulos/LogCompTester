@@ -81,8 +81,7 @@
     {
         "student_username": "wesleygas",
         "repository_name" : "compylador",
-        "run_args" : "mono program.out",
-        "compile_args" : "mcs -out:program.out *.cs",
+        "run_args" : "dotnet run",
 	    "language" : "C#"
     },
     {

@@ -5,6 +5,8 @@ import re
 import json
 #from subprocess import PIPE
 
+acepeted_languages = ["python3","C++","C#"] # C# so funciona se um executavel ja existir
+compile_languages = ["C++"] # C# so funciona com dotnet run
 
 
 def test_main(DIR,student):
@@ -25,7 +27,7 @@ def test_main(DIR,student):
 
     args.append("")
 
-    if language != "python3": #refatorar esse codigo, varias linguas
+    if language in compile_languages :
         compile_args = student["compile_args"]
         compile_args = compile_args.split()
         #compile_args.append("-w") #supress C++ warnings
@@ -142,7 +144,7 @@ def read_git_url_json():
 
 if __name__ == '__main__':
     test_dir = "tests/{!s}_tests".format(sys.argv[1])
-    acepeted_languages = ["python3","C++","C#"] # C# so funciona se um executavel ja existir
+    
 
     json_file = read_git_url_json()
 
