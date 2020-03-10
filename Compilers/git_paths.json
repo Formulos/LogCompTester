@@ -1,7 +1,165 @@
 [
     {
+        "student_username": "LiuSeeker",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 compilador.py",
+        "language" : "python3"
+    },
+    {
+        "student_username": "decoejz",
+        "repository_name" : "compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "brunoartc",
+        "repository_name" : "THP",
+        "compile_args" : "g++ main.cpp",
+        "run_args" : "./a.out",
+	    "language" : "C++"
+    },
+    {
+        "student_username": "gabriellm1",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "rachelbottino",
+        "repository_name" : "LogicaDaComputacao",
+        "run_args" : "python3 roteiro0.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "AntonioAndraues",
+        "repository_name" : "compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "aleblucher",
+        "repository_name" : "compyler",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "Veronur",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "Samuelgranato",
+        "repository_name" : "Compilador_PHP",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "gabrielvf1",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 calculadora.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "franciol",
+        "repository_name" : "compilador",
+        "run_args" : "python3 compilador.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "GustavoGB",
+        "repository_name" : "Compilador_Log",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "manucirne",
+        "repository_name" : "compilador",
+        "run_args" : "python3 somador.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "wesleygas",
+        "repository_name" : "compylador",
+        "run_args" : "mono program.out",
+        "compile_args" : "mcs -out:program.out *.cs",
+	    "language" : "C#"
+    },
+    {
+        "student_username": "pedrooa",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "ViniGl",
+        "repository_name" : "compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "guipleite",
+        "repository_name" : "LogComp",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "Fogelman",
+        "repository_name" : "compyler",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "VictorLMoura",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "elijose55",
+        "repository_name" : "compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "Guialiperti",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 compilador.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "joaoppc",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 roteiro0.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "Veguinho",
+        "repository_name" : "Compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "RaphaelAzev",
+        "repository_name" : "LogCompCompilador",
+        "run_args" : "python3 SimpleCalc.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "hugoecarl",
+        "repository_name" : "Compilator",
+        "run_args" : "python3 compilador.py",
+	    "language" : "python3"
+    },
+    {
         "student_username": "nicolasbss",
         "repository_name" : "compilador",
+        "run_args" : "python3 main.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "gabrielmou10",
+        "repository_name" : "logica-da-computacao",
         "run_args" : "python3 main.py",
 	    "language" : "python3"
     }

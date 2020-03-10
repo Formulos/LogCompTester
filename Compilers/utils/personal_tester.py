@@ -1,0 +1,1 @@
+# auto tester feito para rodar somenete com uma pessoa
