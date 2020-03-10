@@ -81,10 +81,7 @@ def test_main(DIR,student):
                 if (output_error):
                     report += "Mas algo saiu no stderror(que não deveria): \"{!s}\"\n\n".format(str(output_error))
                 else:
-                    report += "\n"
-                failed_test = True
-                continue
-    
+                    report += "\n"    
 
         #cuida dos testes de erro
         else: #aka if sol=Error

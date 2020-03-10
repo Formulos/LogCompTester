@@ -1,6 +1,7 @@
 .vscode
 Compilers/src/*
 Compilers/reports/*
+Compilers/utils/new-test/*
 
 
 # Byte-compiled / optimized / DLL files
