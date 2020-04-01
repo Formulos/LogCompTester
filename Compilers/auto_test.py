@@ -44,8 +44,9 @@ def test_main(DIR,student):
         test_file = DIR +"/teste{!s}.txt".format(i)
         sol_file = DIR +"/sol{!s}.txt".format(i)
 
-        data = get_text(test_file)
-        args[-1] = data
+        #data = get_text(test_file)
+        #args[-1] = data
+        args[-1] = data = test_file
         #data_encoded = str.encode(data)
 
         try:
