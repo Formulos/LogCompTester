@@ -69,7 +69,7 @@
     {
         "student_username": "GustavoGB",
         "repository_name" : "Compilador_Log",
-        "run_args" : "python3 roteiro2/main.py",
+        "run_args" : "python3 roteiro4/main.py",
 	    "language" : "python3"
     },
     {

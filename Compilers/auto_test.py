@@ -41,10 +41,10 @@ def test_main(DIR,student):
             return True
 
     for i in range(1,size_test + 1):
-        test_file = DIR +"/teste{!s}.txt".format(i)
-        sol_file = DIR +"/sol{!s}.txt".format(i)
+        test_file = os.path.abspath(DIR +"/teste{!s}.php".format(i))
+        sol_file = DIR +"/sol{!s}.php".format(i)
 
-        #data = get_text(test_file)
+        input_test = get_text(test_file)
         #args[-1] = data
         args[-1] = data = test_file
         #data_encoded = str.encode(data)
@@ -53,7 +53,7 @@ def test_main(DIR,student):
             output,output_error = get_program_output(src_file,language,args)
         except subprocess.TimeoutExpired:
             report += "teste{!s}: falha\n".format(str(i))
-            report += "input do teste: \"{!s}\" ".format(str(data))
+            report += "input do teste: \"{!s}\" ".format(str(input_test))
             report += "Timeout, teste demorou mais de 3 segundo para rodar, assumo que entrou em um loop infinito\n\n"
             failed_test = True
             continue
@@ -61,7 +61,7 @@ def test_main(DIR,student):
 
         if (output == "") and (output_error == ""):
             report += "teste{!s}: falha\n".format(str(i))
-            report += "input do teste: \"{!s}\" ".format(str(data))
+            report += "input do teste: \"{!s}\" ".format(str(input_test))
             report += "não recebi nada de output!(stderr e stdout estão vazios e não deveriam)\n\n"
             failed_test = True
             #print(output)
@@ -78,7 +78,7 @@ def test_main(DIR,student):
             result = assertEquals(sol, output)
             if not result:
                 report += "teste{!s}: falha\n".format(str(i))
-                report += "input do teste: \"{!s}\" \n".format(str(data))
+                report += "input do teste: \"{!s}\" \n".format(str(input_test))
                 report += "output esperado: \"{!s}\" | output recebido: \"{!s}\"\n".format(str(sol),str(output))
                 failed_test = True
                 if (output_error):
@@ -91,7 +91,7 @@ def test_main(DIR,student):
             if (not output_error): # lembrando que strings vazias são falsas
                 # o codigo não gerou um erro quando deveria
                 report += "teste{!s}: falha, não deu erro mais deveria (algo deveria ter saido no stderr)\n".format(str(i))
-                report += "input do teste: \"{!s}\" ele deveria dar erro!\n\n".format(str(data))
+                report += "input do teste: \"{!s}\" ele deveria dar erro!\n\n".format(str(input_test))
                 failed_test = True
             
 
