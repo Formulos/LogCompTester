@@ -1,0 +1,6 @@
+
+{
+    if True {
+        echo "hello";
+    }
+}

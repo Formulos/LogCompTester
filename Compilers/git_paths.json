@@ -111,19 +111,13 @@
     {
         "student_username": "VictorLMoura",
         "repository_name" : "Compilador",
-        "run_args" : "python3 main.py",
+        "run_args" : "python3 roteiro_zero.py",
 	    "language" : "python3"
     },
     {
         "student_username": "elijose55",
         "repository_name" : "compilador",
         "run_args" : "python3 main.py",
-	    "language" : "python3"
-    },
-    {
-        "student_username": "Guialiperti",
-        "repository_name" : "Compilador",
-        "run_args" : "python3 compilador.py",
 	    "language" : "python3"
     },
     {
@@ -153,12 +147,6 @@
     {
         "student_username": "nicolasbss",
         "repository_name" : "compilador",
-        "run_args" : "python3 main.py",
-	    "language" : "python3"
-    },
-    {
-        "student_username": "gabrielmou10",
-        "repository_name" : "logica-da-computacao",
         "run_args" : "python3 main.py",
 	    "language" : "python3"
     },
