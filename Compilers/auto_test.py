@@ -18,10 +18,12 @@ def test_main(DIR,student):
     if (language not in acepeted_languages):
         raise Exception("language {!s} is not a acepeted language!".format(language))
     
-    size_test = (len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])) //2
+    #diz a quantidade de testes, simplesmente pega a quantidade de arquivos na pasta e divide por dois
+    size_test = (len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))]))//2
+
     src_file = "src/{!s}".format(person)
 
-    report = "Aluno: {!s}\n \n".format(person)
+    report = "Aluno: {!s}\n\n".format(person)
 
     failed_test = False
 
@@ -42,18 +44,25 @@ def test_main(DIR,student):
 
     for i in range(1,size_test + 1):
         test_file = os.path.abspath(DIR +"/teste{!s}.php".format(i))
-        sol_file = DIR +"/sol{!s}.php".format(i)
+        stdin_file = os.path.abspath(DIR +"/inputs/input{!s}.txt".format(i))
+        sol_file = DIR +"/sol{!s}.txt".format(i)
 
         input_test = get_text(test_file)
         #args[-1] = data
-        args[-1] = data = test_file
+        args[-1] = test_file
         #data_encoded = str.encode(data)
 
+        #leva um input para o subprocess run
+        test_stdin = None
+        if (os.path.exists(stdin_file)):
+            test_stdin = get_text(stdin_file) #trocar aqui
+            test_stdin = test_stdin.encode()
+
         try:
-            output,output_error = get_program_output(src_file,language,args)
+            output,output_error = get_program_output(src_file,language,args,test_stdin)
         except subprocess.TimeoutExpired:
             report += "teste{!s}: falha\n".format(str(i))
-            report += "input do teste: \n \n{!s}\n \n ".format(str(input_test))
+            report = write_input_stdin(report,input_test,test_stdin)
             report += "Timeout, teste demorou mais de 3 segundo para rodar, assumo que entrou em um loop infinito\n\n"
             failed_test = True
             continue
@@ -61,7 +70,7 @@ def test_main(DIR,student):
 
         if (output == "") and (output_error == ""):
             report += "teste{!s}: falha\n".format(str(i))
-            report += "input do teste: \n \n{!s}\n \n ".format(str(input_test))
+            report = write_input_stdin(report,input_test,test_stdin)
             report += "não recebi nada de output!(stderr e stdout estão vazios e não deveriam)\n\n"
             failed_test = True
             #print(output)
@@ -78,11 +87,11 @@ def test_main(DIR,student):
             result = assertEquals(sol, output)
             if not result:
                 report += "teste{!s}: falha\n".format(str(i))
-                report += "input do teste: \n \n{!s}\n \n \n".format(str(input_test))
-                report += "output esperado: \n \n{!s}\n \noutput recebido: \n \n{!s}\n \n\n".format(str(sol),str(output))
+                report = write_input_stdin(report,input_test,test_stdin)
+                report += "output esperado: \n{!s}\n\noutput recebido: \n\n{!s}\n\n".format(str(sol),str(output))
                 failed_test = True
                 if (output_error):
-                    report += "Mas algo saiu no stderror(que não deveria): \n \n{!s}\n \n\n".format(str(output_error))
+                    report += "Mas algo saiu no stderror(que não deveria): \n{!s}\n\n".format(str(output_error))
                 else:
                     report += "\n"    
 
@@ -91,10 +100,9 @@ def test_main(DIR,student):
             if (not output_error): # lembrando que strings vazias são falsas
                 # o codigo não gerou um erro quando deveria
                 report += "teste{!s}: falha, não deu erro mais deveria (algo deveria ter saido no stderr)\n".format(str(i))
-                report += "input do teste: \n \n{!s}\n \n ele deveria dar erro!\n\n".format(str(input_test))
+                report += "input do teste: \n{!s}\n ele deveria dar erro!\n\n".format(str(input_test))
                 failed_test = True
             
-
     if failed_test:
         report_writer(report,person)
 
@@ -103,16 +111,25 @@ def test_main(DIR,student):
 def assertEquals(var1, var2):
     return var1 == var2
 
-def get_text(test_file):
-    with open(test_file, 'r') as file:
+def get_text(read_file):
+    with open(read_file, 'r') as file:
         data = file.read()
     return data
 
-def get_program_output(src_file,language,args,maxtime=3.0):
+def write_input_stdin(report,input_test,test_stdin):
+    report +="input do teste: \n{!s}\n".format(str(input_test))
+    if test_stdin:
+        test_stdin = test_stdin.decode()
+        report +="stdin do teste: \n{!s}\n".format(str(test_stdin))
+    return report
+
+def get_program_output(src_file,language,args,test_stdin,maxtime=3.0):
     #if language =="python3":
     #    args = ["python3",src_file,data]
-
-    output = subprocess.run(args,cwd=src_file,stderr=subprocess.PIPE,stdout=subprocess.PIPE,timeout=maxtime)
+    if test_stdin:
+        output = subprocess.run(args,cwd=src_file,input=test_stdin,stderr=subprocess.PIPE,stdout=subprocess.PIPE,timeout=maxtime)
+    else:
+        output = subprocess.run(args,cwd=src_file,stderr=subprocess.PIPE,stdout=subprocess.PIPE,timeout=maxtime)
 
     text = output.stdout.decode("utf-8")
     text_error = output.stderr.decode("utf-8")

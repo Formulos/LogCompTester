@@ -69,7 +69,7 @@
     {
         "student_username": "GustavoGB",
         "repository_name" : "Compilador_Log",
-        "run_args" : "python3 roteiro4/main.py",
+        "run_args" : "python3 main.py",
 	    "language" : "python3"
     },
     {
@@ -154,6 +154,12 @@
         "student_username": "SabrinaMB",
         "repository_name" : "Compilador_7oSem",
         "run_args" : "python3 compilador.py",
+	    "language" : "python3"
+    },
+    {
+        "student_username": "miannoni",
+        "repository_name" : "logica-repositorio",
+        "run_args" : "python3 main.py",
 	    "language" : "python3"
     }
 ]
