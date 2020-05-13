@@ -1,1 +1,2 @@
-echo 42
+<?php
+echo 42?>

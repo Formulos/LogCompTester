@@ -2,5 +2,4 @@
 {
     $x = readline();
     echo $x;
-}
-?>
+}?>

@@ -1,3 +1,4 @@
+<?php
 {
     if(0 or false){
         echo 1;
@@ -6,3 +7,4 @@
         echo 42;
     }
 }
+?>
