@@ -3,6 +3,7 @@ Compilers/src/*
 Compilers/reports/*
 Compilers/utils/new-test/*
 Compilers/reports_backup/*
+Compilers/assembly/*
 
 
 # Byte-compiled / optimized / DLL files

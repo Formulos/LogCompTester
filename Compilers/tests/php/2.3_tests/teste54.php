@@ -1,6 +1,6 @@
 <?php
 {
-    if(0 or false){
+    if(1 or false){
         echo 1;
     }
     else{

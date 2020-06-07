@@ -3,11 +3,14 @@ import sys
 import subprocess
 import re
 import json
-#from subprocess import PIPE
 
-acepeted_languages = ["python3","C++","C#"] # C# so funciona se um executavel ja existir
-compile_languages = ["C++"] # C# so funciona com dotnet run
-
+#Constantes
+acepeted_languages = ["python3","C++","C#"]
+compile_languages = ["C++","C#"]
+maxtime=10.0 #Timeout para cada teste, em segundos
+direct_input = False # Cada o input NÂO seja um arquivo nas vesoes mais baixas
+assembly = True
+assembly_test = 1
 
 def test_main(DIR,student):
     language = student["language"]
@@ -29,6 +32,7 @@ def test_main(DIR,student):
 
     args.append("")
 
+
     if language in compile_languages :
         compile_args = student["compile_args"]
         compile_args = compile_args.split()
@@ -42,28 +46,51 @@ def test_main(DIR,student):
             report_writer(report,person)
             return True
 
+    #caso seja a versão 3.0
+    if assembly:
+        test_file = os.path.abspath(DIR +"/teste{!s}.php".format(assembly_test))
+        #stdin_file = os.path.abspath(DIR +"/inputs/input{!s}.txt".format(i))
+        #sol_file = DIR +"/sol{!s}.txt".format(i)
+        args[-1] = test_file
+        try:
+            output,output_error = get_program_output(src_file,language,args)
+            if output_error:
+                print(output_error)
+                return True
+            return False
+        except subprocess.TimeoutExpired:
+            print("Assemble timeout")
+            return True
+    
     for i in range(1,size_test + 1):
         test_file = os.path.abspath(DIR +"/teste{!s}.php".format(i))
         stdin_file = os.path.abspath(DIR +"/inputs/input{!s}.txt".format(i))
         sol_file = DIR +"/sol{!s}.txt".format(i)
 
         input_test = get_text(test_file)
-        #args[-1] = data
         args[-1] = test_file
+
+        if direct_input:
+            args[-1] = get_text(test_file).encode()
+
+
         #data_encoded = str.encode(data)
 
-        #leva um input para o subprocess run
+        
         test_stdin = None
+        #caso um input exista
         if (os.path.exists(stdin_file)):
-            test_stdin = get_text(stdin_file) #trocar aqui
+            test_stdin = get_text(stdin_file)
             test_stdin = test_stdin.encode()
 
         try:
             output,output_error = get_program_output(src_file,language,args,test_stdin)
+            if assembly:
+                pass#ler arquivo aqui
         except subprocess.TimeoutExpired:
             report += "teste{!s}: falha\n".format(str(i))
             report = write_input_stdin(report,input_test,test_stdin)
-            report += "Timeout, teste demorou mais de 3 segundo para rodar, assumo que entrou em um loop infinito\n\n"
+            report += "Timeout, teste demorou mais de 5 segundo para rodar, assumo que entrou em um loop infinito\n\n"
             failed_test = True
             continue
             
@@ -96,11 +123,11 @@ def test_main(DIR,student):
                     report += "\n"    
 
         #cuida dos testes de erro
-        else: #aka if sol=Error
+        else: #ou seja sol==Error
             if (not output_error): # lembrando que strings vazias são falsas
                 # o codigo não gerou um erro quando deveria
                 report += "teste{!s}: falha, não deu erro mais deveria (algo deveria ter saido no stderr)\n".format(str(i))
-                report += "input do teste: \n{!s}\n ele deveria dar erro!\n\n".format(str(input_test))
+                report = write_input_stdin(report,input_test,test_stdin)
                 failed_test = True
             
     if failed_test:
@@ -117,15 +144,14 @@ def get_text(read_file):
     return data
 
 def write_input_stdin(report,input_test,test_stdin):
-    report +="input do teste: \n{!s}\n".format(str(input_test))
+    
+    report +="input do teste: \n```\n\n{!s}\n```\n".format(str(input_test))
     if test_stdin:
         test_stdin = test_stdin.decode()
         report +="stdin do teste: \n{!s}\n".format(str(test_stdin))
     return report
 
-def get_program_output(src_file,language,args,test_stdin,maxtime=3.0):
-    #if language =="python3":
-    #    args = ["python3",src_file,data]
+def get_program_output(src_file,language,args,test_stdin=None):
     if test_stdin:
         output = subprocess.run(args,cwd=src_file,input=test_stdin,stderr=subprocess.PIPE,stdout=subprocess.PIPE,timeout=maxtime)
     else:
@@ -145,9 +171,12 @@ def compile(src_file,compile_args):
 
 def text_processor(text):
     text = os.linesep.join([s for s in text.splitlines() if s]) #tira espaços seguidos (\n\n)
-    text.strip()
+    text2 = ""
+    for i in text.splitlines():
+        text2 += i.strip()+"\n"
+    text2=text2[:-1]
 
-    return text
+    return text2
 
 def report_writer(report,person):
     person_file = "reports/{!s}.txt".format(person)

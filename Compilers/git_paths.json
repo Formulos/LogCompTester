@@ -14,9 +14,8 @@
     {
         "student_username": "brunoartc",
         "repository_name" : "THP",
-        "compile_args" : "g++ main.cpp",
-        "run_args" : "./a.out",
-	    "language" : "C++"
+        "run_args" : "python3 Python/main.py",
+	    "language" : "python3"
     },
     {
         "student_username": "gabriellm1",
@@ -81,7 +80,8 @@
     {
         "student_username": "wesleygas",
         "repository_name" : "compylador",
-        "run_args" : "dotnet run",
+        "run_args" : "./out/compylador",
+        "compile_args": "dotnet build --nologo -o out",
 	    "language" : "C#"
     },
     {
