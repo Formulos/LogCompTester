@@ -106,14 +106,16 @@ s6="""Error"""
 a7= \
 """<?php
 {
-    function muitos($x, $y) {
-        return 1;
+    function ifs($x, $y) {
+        if($x<$y){
+            return 1;
+            }
+        return 0;
         }
-    $a = 3;
-    muitos($a,3,3);
+    echo ifs(1,2);
 }
 ?>"""
-s7="""Error"""
+s7="""1"""
 
 a8= \
 """<?php
@@ -139,14 +141,14 @@ a9= \
 ?>"""
 s9="""42"""
 
-test = [a1,a3,a4,a5,a6,a8,a9]
-sol = [s1,s3,s4,s5,s6,s8,s9]
+test = [a1,a3,a4,a5,a6,a7,a8,a9]
+sol = [s1,s3,s4,s5,s6,s7,s8,s9]
 inp = []
 
 if (len(test) != len(sol)):
     raise Exception("len Sol != test")
 
-init = 1
+init = 64
 counter = init
 while counter < (len(test) +init):
     print(counter)
@@ -155,9 +157,9 @@ while counter < (len(test) +init):
     with open(new_test, 'w') as file:
         file.write(test[counter - init])
 
-    #new_sol = "new-test/sol{!s}.txt".format(counter)
-    #with open(new_sol, 'w') as file:
-    #    file.write(sol[counter - init])
+    new_sol = "new-test/sol{!s}.txt".format(counter)
+    with open(new_sol, 'w') as file:
+        file.write(sol[counter - init])
 
     #new_input = "new-test/inputs/input{!s}.txt".format(counter)
     #with open(new_input, 'w') as file:

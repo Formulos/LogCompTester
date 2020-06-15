@@ -7,9 +7,9 @@ import json
 #Constantes
 acepeted_languages = ["python3","C++","C#"]
 compile_languages = ["C++","C#"]
-maxtime=10.0 #Timeout para cada teste, em segundos
+maxtime=5.0 #Timeout para cada teste, em segundos
 direct_input = False # Cada o input NÂO seja um arquivo nas vesoes mais baixas
-assembly = True
+assembly = False
 assembly_test = 1
 
 def test_main(DIR,student):
@@ -145,17 +145,15 @@ def get_text(read_file):
 
 def write_input_stdin(report,input_test,test_stdin):
     
-    report +="input do teste: \n```\n\n{!s}\n```\n".format(str(input_test))
+    report +="input do teste: \n```\n\n{!s}\n```\n\n".format(str(input_test))
     if test_stdin:
         test_stdin = test_stdin.decode()
         report +="stdin do teste: \n{!s}\n".format(str(test_stdin))
     return report
 
 def get_program_output(src_file,language,args,test_stdin=None):
-    if test_stdin:
-        output = subprocess.run(args,cwd=src_file,input=test_stdin,stderr=subprocess.PIPE,stdout=subprocess.PIPE,timeout=maxtime)
-    else:
-        output = subprocess.run(args,cwd=src_file,stderr=subprocess.PIPE,stdout=subprocess.PIPE,timeout=maxtime)
+    
+    output = subprocess.run(args,cwd=src_file,input=test_stdin,stderr=subprocess.PIPE,stdout=subprocess.PIPE,timeout=maxtime)
 
     text = output.stdout.decode("utf-8")
     text_error = output.stderr.decode("utf-8")

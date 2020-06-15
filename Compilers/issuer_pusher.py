@@ -2,8 +2,15 @@ import os
 import subprocess
 import re
 
-def auto_issue(person,text):
-    subprocess.run(["ghi", "open","-m","autoIssue 2.4\n"+text],cwd="src/{!s}".format(person))
+def auto_issue(name,text):
+    #print(name)
+    '''
+    Existe um problema nisso, o subproces tem uma quantida maxima de argumentos e como o texto é um argumento
+    pode acontecer de passar, isso só aconteceu uma vez com um reporte de 4483 linhas, então é dificil.
+    Se continuar dando problema um jeito de arrumar é caso o texto ser muito longo dividir o txt em pedaços
+    e passar eles como comentários.
+    '''
+    subprocess.run(["ghi", "open","-m","autoIssue\n"+text],cwd="src/{!s}".format(name))
 
 
 if __name__ == '__main__':
@@ -13,6 +20,6 @@ if __name__ == '__main__':
         name = f[:-4] #tira o .txt
 
         with open("reports/{!s}".format(f), 'r') as file:
-            data = file.read()
+            text = file.read()
 
-        auto_issue(name,data)
+        auto_issue(name,text)

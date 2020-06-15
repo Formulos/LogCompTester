@@ -1,6 +1,7 @@
 from git import Repo, Git
 import sys
 import os
+import shutil
 import re
 import json
 
@@ -76,6 +77,11 @@ def delete_old_reports():
     for f in filelist:
         os.remove(os.path.join("reports/", f))
 
+def delete_old_src():
+    filelist = [ f for f in os.listdir("src/")]
+    for f in filelist:
+        shutil.rmtree(os.path.join("src/", f))
+
 def report_writer(report,person):
     person_file = "reports/{!s}.txt".format(person)
     with open(person_file, 'w') as file:
@@ -83,4 +89,5 @@ def report_writer(report,person):
 
 if __name__ == "__main__":
     delete_old_reports()
+    delete_old_src()
     update_repos(read_git_url_json(), CODE_VERSION)
