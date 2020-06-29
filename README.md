@@ -58,18 +58,18 @@ O codigo esta divido em três partes, fetch_releases.py, auto_test.py e issuer_p
 O fetch_releases precisa de uma chave SSH configurada para se comunicar com o github é esperado que ela esteja no path "~/.ssh/id_rsa" que é o padrão.
 Um tutorial de como criar uma chave ssh para o github pode ser encontrado [aqui](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 
-Tanto o fetch_releases e o auto_test precisam de um git_paths configurado, o git_paths é um json que comtem uma lista de dicionario com as informaçoes de todos os alunos um exemplo pode ser visto a seguir:
+Tanto o fetch_releases e o auto_test precisam de um git_paths configurado, o git_paths.json é um json que comtem uma lista de dicionario com as informaçoes de todos os alunos um exemplo pode ser visto a seguir:
 
 ```
 [
     {
-        "student_username": "aluno1",
+        "student_username": "lucassa3",
         "repository_name" : "compilador",
         "run_args" : "python3 somador.py",
 	"language" : "python3"
     },
     {
-        "student_username": "aluno2",
+        "student_username": "raulikeda",
         "repository_name" : "rep",
         "run_args" : "./out/compylador",
         "compile_args": "dotnet build --nologo -o out",
@@ -77,5 +77,11 @@ Tanto o fetch_releases e o auto_test precisam de um git_paths configurado, o git
     }
 ]
 ```
+O git_paths.json tem os seguintes parâmetros:
+1. student_username - nome do usuario git do aluno
+2. repository_name - nome do repositorio que contem o compilador
+3. run_args - é os argumentos que um cmd precisa para executar o compilador
+4. compile_args - é os argumentos que um cmd precisa para compilar o compilador, so necessário se linguagem precisar de compilação
+5. language - é a língua que o compilador está escrita
 
 
