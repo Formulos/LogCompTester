@@ -35,12 +35,21 @@ Se o aluno nao deu o release ou errou a tag da release, seu template de review d
 
 versão 2.0
 
-O codigo esta divido em três partes, fetch_releases.py, auto_test.py e issuer_pusher.py elas em ordem fazem pull de todos os repositórios, fazem todos os testes para os repositórios e criam as issues 
+O codigo esta divido em três partes, fetch_releases.py, auto_test.py e issuer_pusher.py elas em ordem fazem pull de todos os repositórios, fazem todos os testes para os repositórios e criam as issues.
 
-o ghi esta impedindo o projeto de ser realmente automatico ja que precisa configurar ele, e ele não suporta uma chave ssh
+Existem duas dependências além do python
 
-installar ghi
-sudo apt install ghi
+1. Gitpython usado para fazer o pull, ele pode ser instalado com:
 
-ghi config --auth "username"
+```
+$ pip install gitpython
+```
+
+2. Ghi usado para criar as issues ele precisa ser instalado e configurado:
+```
+$ sudo apt install ghi
+$ ghi config --auth "username"
+```
+
+
 
