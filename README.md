@@ -102,13 +102,26 @@ Se uma relese não for encontrada é criado um report dentro da pasta reports
 $ python3 auto_test.py php/2.4
 ```
 O auto_testes executa os testes para todos os alunos que não tem um report na pasta de reports.
+
 O auto_testes tambem tem algumas constantes no começo do código, elas são:
-acepeted_languages - lista das linguagem que esse programa foi testado com, se uma linguagem não estiver e estiver no json um erro é gerado
-compile_languages - lista as linguagens que precisam de uma etapa de compilação antes da execução
-maxtime - tempo maximo que cada teste deve rodar antes de dar um timeout em segundos (é um float)
-direct_input -(True ou False) diz se é passado o conteúdo de um teste, em vez do caminho dele, é usado para as versões baixas
-assembly - (True ou False) usado para testar a versão assembly, somente roda o arquivo de teste para cada aluno, e mostra um erro no terminal se ouve um erro na execução do teste, ele não gera reports automáticos
-assembly_test - o número do teste de assembly, geralmente só vai ter 1, é usado somente se assembly = True
+acepeted_languages - lista das linguagem que esse programa foi testado com, se uma linguagem não estiver e estiver no json um erro é gerado.
+
+compile_languages - lista as linguagens que precisam de uma etapa de compilação antes da execução.
+
+maxtime - tempo maximo que cada teste deve rodar antes de dar um timeout em segundos (é um float).
+
+direct_input -(True ou False) diz se é passado o conteúdo de um teste, em vez do caminho dele, é usado para as versões baixas.
+
+assembly - (True ou False) usado para testar a versão assembly, somente roda o arquivo de teste para cada aluno, e mostra um erro no terminal se ouve um erro na execução do teste, ele não gera reports automáticos.
+
+assembly_test - o número do teste de assembly, geralmente só vai ter 1, é usado somente se assembly = True.
+
+3. para executar o issuer_pusher.py é só necessário rodar:
+```
+python3 issuer_pusher.py
+```
+Ele pega o conteudo de todos os reports e cria uma issue com o nome autoIssue para cada aluno, se um report não existe não é criado uma issue para o aluno.
+É um codigo simples que somente chama o ghi na pasta src/aluno e passa como stdin o conteudo de report.
 
 
-
+## Criando novos testes:
