@@ -88,17 +88,27 @@ Um exemplo pode ser visto a seguir:
 
 ## Como rodar:
 
-Importante: todos os caminhos do codigo estão relativos, assim eles precisam ser executados por um cmd que esta dentro da pasta Compiler
+Importante: todos os caminhos do codigo estão relativos, assim eles os programas precisam ser executados por um cmd que esta dentro da pasta Compiler
 
 Ao executar o fetch_releases ele deleta todos os reports e os codigos dos alunos que estão em src
 1. Para puxar a release x.x de cada aluno, basta usar:
 ```
 $ python fetch_releases.py git_paths.json 2.0
 ```
-Se uma realese não for encontrada é criado um report dentro da pasta reports
+Se uma relese não for encontrada é criado um report dentro da pasta reports
 
 2. Para rodar o os testes para todos os alunos
 ```
 $ python3 auto_test.py php/2.4
 ```
-O auto_testes executa os testes para todos os alunos que não tem um report na pasta de reports 
+O auto_testes executa os testes para todos os alunos que não tem um report na pasta de reports.
+O auto_testes tambem tem algumas constantes no começo do código, elas são:
+acepeted_languages - lista das linguagem que esse programa foi testado com, se uma linguagem não estiver e estiver no json um erro é gerado
+compile_languages - lista as linguagens que precisam de uma etapa de compilação antes da execução
+maxtime - tempo maximo que cada teste deve rodar antes de dar um timeout em segundos (é um float)
+direct_input -(True ou False) diz se é passado o conteúdo de um teste, em vez do caminho dele, é usado para as versões baixas
+assembly - (True ou False) usado para testar a versão assembly, somente roda o arquivo de teste para cada aluno, e mostra um erro no terminal se ouve um erro na execução do teste, ele não gera reports automáticos
+assembly_test - o número do teste de assembly, geralmente só vai ter 1, é usado somente se assembly = True
+
+
+
