@@ -33,14 +33,14 @@ Se o aluno nao deu o release ou errou a tag da release, seu template de review d
 
 
 
-versão 2.0 - Essa parte esta incompleta
+versão 2.0
+
+O codigo esta divido em três partes, fetch_releases.py, auto_test.py e issuer_pusher.py elas em ordem fazem pull de todos os repositórios, fazem todos os testes para os repositórios e criam as issues 
 
 o ghi esta impedindo o projeto de ser realmente automatico ja que precisa configurar ele, e ele não suporta uma chave ssh
 
 installar ghi
-gem install ghi
-
-parece que funciona com pip mas não tenho certeza
+sudo apt install ghi
 
 ghi config --auth "username"
 
