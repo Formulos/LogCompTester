@@ -95,11 +95,11 @@ Ele pega o conteúdo de todos os reports e cria uma issue com o nome autoIssue p
 
 Todos os testes devem estar dentro da pasta tests e devem estar organizados por versão, o auto_test ira executar todos os testes da pasta, porem ele não podem pular um numero (ou seja não deve existir teste2.php sem teste1.php). Para um teste ser executado ele precisa de um teste{x}.php (ou .txt nos testes das versões baixos) que contem contem o código que deve ser testado, também precisa de um sol{x}.txt que contém a solução do teste correspondente, a solução deve ser exatamente o que o print do compilador deve gerar (cuidado com \n), ou seja precisa ter um numero par de arquivos todo o teste precisa ter um sol correspondente. Se o teste for feito para gerar um erro a solução correspondente deve conter somente a string "Error" qualquer outro conteúdo (incluindo \n) e o teste não é considerado um teste que deve gerar um erro.
 
-Tambem é possivel gerar um teste que recebe um input, nesse caso é preciso criar um outro arquivo dentro da pasta inputs que deve estar dentro da pasta {X}_tests , ele deve se chamar input{x}.txt sendo que x deve ser o numero do teste que deve receber o input, diferente dos testes que não podem pular um número, os inputs podem. Pode ser criado mais de um input para um teste para isso é somente necessario usar um \n dentro do input{x}.txt como exemplo abaixo o 4 e o 2 são passados como inputs diferentes.
+Tambem é possivel gerar um teste que recebe um input, nesse caso é preciso criar um outro arquivo dentro da pasta inputs que deve estar dentro da pasta {X}_tests , ele deve se chamar input{x}.txt sendo que x deve ser o numero do teste que deve receber o input, diferente dos testes que não podem pular um número, os inputs podem. Pode ser criado mais de um input para um teste para isso é somente necessario usar um \n dentro do input{x}.txt como exemplo abaixo o 4 e o 2 são passados como inputs diferentes, (ou seja cada linha é um input novo).
 ```
 4
-3
+2
 ```
-Cuidado com \n se eles existirem no input{x}.txt é mandado algo vazio para o stdin provalvelmente gerando um teste diferente do esperado.
+Cuidado com \n se eles existirem como primeira linha input{x}.txt é mandado algo vazio para o stdin provalvelmente gerando um teste diferente do esperado.
 
 Usei um codigo simples que esta dentro de util chamdo simple_test_maker.py para ajudar na criação de novos testes.
