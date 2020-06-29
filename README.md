@@ -86,5 +86,19 @@ Um exemplo pode ser visto a seguir:
 ]
 ```
 
+## Como rodar:
 
+Importante: todos os caminhos do codigo estão relativos, assim eles precisam ser executados por um cmd que esta dentro da pasta Compiler
 
+Ao executar o fetch_releases ele deleta todos os reports e os codigos dos alunos que estão em src
+1. Para puxar a release x.x de cada aluno, basta usar:
+```
+$ python fetch_releases.py git_paths.json 2.0
+```
+Se uma realese não for encontrada é criado um report dentro da pasta reports
+
+2. Para rodar o os testes para todos os alunos
+```
+$ python3 auto_test.py php/2.4
+```
+O auto_testes executa os testes para todos os alunos que não tem um report na pasta de reports 
