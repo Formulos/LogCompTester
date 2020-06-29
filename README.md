@@ -35,7 +35,8 @@ Se o aluno nao deu o release ou errou a tag da release, seu template de review d
 
 versão 2.0
 
-O codigo esta divido em três partes, fetch_releases.py, auto_test.py e issuer_pusher.py elas em ordem fazem pull de todos os repositórios, fazem todos os testes para os repositórios e criam as issues.
+## Dependências:
+
 
 Existem duas dependências além do python
 
@@ -50,6 +51,14 @@ $ pip install gitpython
 $ sudo apt install ghi
 $ ghi config --auth "username"
 ```
+## Configurando projeto:
+
+O codigo esta divido em três partes, fetch_releases.py, auto_test.py e issuer_pusher.py elas em ordem fazem pull de todos os repositórios, fazem todos os testes para os repositórios e criam as issues.
+
+O fetch_releases precisa de uma chave SSH configurada para se comunicar com o github é esperado que ela esteja no path "~/.ssh/id_rsa" que é o padrão
+
+
+
 
 
 
