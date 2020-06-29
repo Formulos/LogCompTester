@@ -66,14 +66,14 @@ Tanto o fetch_releases e o auto_test precisam de um git_paths configurado, o git
         "student_username": "aluno1",
         "repository_name" : "compilador",
         "run_args" : "python3 somador.py",
-	      "language" : "python3"
+	"language" : "python3"
     },
     {
         "student_username": "aluno2",
         "repository_name" : "rep",
         "run_args" : "./out/compylador",
         "compile_args": "dotnet build --nologo -o out",
-	      "language" : "C#"
+	"language" : "C#"
     }
 ]
 ```
