@@ -1,5 +1,5 @@
 # MonitoriaLogComp
-Repositorio de ferramentas de avaliacao de compiladores feitos na materia
+Repositório de ferramentas de avaliação de compiladores feitos na materia
 
 
 ## Dependências:
@@ -25,7 +25,7 @@ O codigo esta divido em três partes, fetch_releases.py, auto_test.py e issuer_p
 O fetch_releases precisa de uma chave SSH configurada para se comunicar com o github é esperado que ela esteja no path "~/.ssh/id_rsa" que é o padrão.
 Um tutorial de como criar uma chave ssh para o github pode ser encontrado [aqui](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 
-Tanto o fetch_releases e o auto_test precisam de um git_paths configurado, o git_paths.json contem uma lista de dicionarios com as informaçoes de todos os alunos,
+Tanto o fetch_releases e o auto_test precisam de um git_paths configurado, o git_paths.json contém uma lista de dicionários com as informações de todos os alunos,
 ele tem os seguintes parâmetros:
 1. student_username - nome do usuario git do aluno
 2. repository_name - nome do repositorio que contem o compilador
@@ -55,7 +55,7 @@ Um exemplo pode ser visto a seguir:
 
 ## Como rodar:
 
-Importante: todos os caminhos do codigo estão relativos, assim eles os programas precisam ser executados por um cmd que esta dentro da pasta Compiler
+Importante: todos os caminhos do código estão relativos, assim eles os programas precisam ser executados por um cmd que está dentro da pasta Compiler
 
 Ao executar o fetch_releases ele deleta todos os reports e os codigos dos alunos que estão em src
 1. Para puxar a release x.x de cada aluno, basta usar:
@@ -68,6 +68,8 @@ Se uma release não for encontrada é criado um report dentro da pasta reports
 ```
 $ python3 auto_test.py php/2.4
 ```
+Como o auto_test somente chama um subprocess para executar o código, o computador utilizado precisa ser capaz de compilar e executar o código.
+
 O auto_testes executa os testes para todos os alunos que não tem um report na pasta de reports.
 
 O auto_testes tambem tem algumas constantes no começo do código, elas são:
@@ -103,4 +105,3 @@ Também é possível gerar um teste que recebe um input, nesse caso é preciso c
 Cuidado com \n se eles existirem como primeira linha input{x}.txt é mandado algo vazio para o stdin provavelmente gerando um teste diferente do esperado.
 
 Usei um código simples que esta dentro de util chamdo simple_test_maker.py para ajudar na criação de novos testes.
-
