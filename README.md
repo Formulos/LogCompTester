@@ -62,7 +62,7 @@ Ao executar o fetch_releases ele deleta todos os reports e os codigos dos alunos
 ```
 $ python fetch_releases.py git_paths.json 2.0
 ```
-Se uma relese não for encontrada é criado um report dentro da pasta reports
+Se uma release não for encontrada é criado um report dentro da pasta reports
 
 2. Para rodar o os testes para todos os alunos
 ```
