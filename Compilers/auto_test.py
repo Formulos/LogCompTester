@@ -8,7 +8,7 @@ import json
 acepeted_languages = ["python3","C++","C#"]
 compile_languages = ["C++","C#"]
 maxtime=5.0 #Timeout para cada teste, em segundos
-direct_input = True # passa o conteudo do arquivo como argumento (testes das versões baixas)
+direct_input = False # passa o conteudo do arquivo como argumento (testes das versões baixas)
 assembly = False
 assembly_test = 1
 
