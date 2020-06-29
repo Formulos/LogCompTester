@@ -8,7 +8,7 @@ import json
 acepeted_languages = ["python3","C++","C#"]
 compile_languages = ["C++","C#"]
 maxtime=5.0 #Timeout para cada teste, em segundos
-direct_input = False # Cada o input NÂO seja um arquivo nas vesoes mais baixas
+direct_input = True # passa o conteudo do arquivo como argumento (testes das versões baixas)
 assembly = False
 assembly_test = 1
 
@@ -36,7 +36,6 @@ def test_main(DIR,student):
     if language in compile_languages :
         compile_args = student["compile_args"]
         compile_args = compile_args.split()
-        #compile_args.append("-w") #supress C++ warnings
         compile_err_output = compile(src_file,compile_args)
 
         if compile_err_output: #strings vazias são falsas
@@ -67,11 +66,14 @@ def test_main(DIR,student):
         stdin_file = os.path.abspath(DIR +"/inputs/input{!s}.txt".format(i))
         sol_file = DIR +"/sol{!s}.txt".format(i)
 
-        input_test = get_text(test_file)
-        args[-1] = test_file
 
         if direct_input:
+            test_file = os.path.abspath(DIR +"/teste{!s}.txt".format(i))
             args[-1] = get_text(test_file).encode()
+        else:
+            args[-1] = test_file
+
+        input_test = get_text(test_file)
 
 
         #data_encoded = str.encode(data)
@@ -85,17 +87,15 @@ def test_main(DIR,student):
 
         try:
             output,output_error = get_program_output(src_file,language,args,test_stdin)
-            if assembly:
-                pass#ler arquivo aqui
         except subprocess.TimeoutExpired:
             report += "teste{!s}: falha\n".format(str(i))
             report = write_input_stdin(report,input_test,test_stdin)
-            report += "Timeout, teste demorou mais de 5 segundo para rodar, assumo que entrou em um loop infinito\n\n"
+            report += "Timeout, teste demorou mais de {} segundo para rodar, assumo que entrou em um loop infinito\n\n".format(str(maxtime))
             failed_test = True
             continue
             
 
-        if (output == "") and (output_error == ""):
+        if ((not output) and (not output_error)):
             report += "teste{!s}: falha\n".format(str(i))
             report = write_input_stdin(report,input_test,test_stdin)
             report += "não recebi nada de output!(stderr e stdout estão vazios e não deveriam)\n\n"
@@ -125,7 +125,6 @@ def test_main(DIR,student):
         #cuida dos testes de erro
         else: #ou seja sol==Error
             if (not output_error): # lembrando que strings vazias são falsas
-                # o codigo não gerou um erro quando deveria
                 report += "teste{!s}: falha, não deu erro mais deveria (algo deveria ter saido no stderr)\n".format(str(i))
                 report = write_input_stdin(report,input_test,test_stdin)
                 failed_test = True

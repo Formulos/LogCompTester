@@ -7,7 +7,7 @@ import json
 
 """
 important:
-the update function deletes all local changes
+esse codigo deleta tudo que esta dentro das pastas src e reports
 """
 
 CODE_VERSION = sys.argv[2]
