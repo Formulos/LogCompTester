@@ -80,7 +80,7 @@ O auto_testes tambem tem algumas constantes no começo do código, elas são:
 5. assembly - (True ou False) usado para testar a versão assembly, somente roda o arquivo de teste para cada aluno, e mostra um erro no terminal se ouve um erro na execução do teste, ele não gera reports automáticos.
 6. assembly_test - o número do teste de assembly, geralmente só vai ter 1, é usado somente se assembly = True.
 
-3. para executar o issuer_pusher.py é só necessário rodar:
+para executar o issuer_pusher.py é só necessário rodar:
 ```
 python3 issuer_pusher.py
 ```
