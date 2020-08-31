@@ -39,7 +39,7 @@ def test_main(DIR,student):
         compile_err_output = compile(src_file,compile_args)
 
         if compile_err_output: #strings vazias são falsas
-            report += "Error: teste automatico não conseguio compilar arquivo!\n"
+            report += "Error: teste automatico não conseguiu compilar arquivo!\n"
             report += "parametros de compilação: {!s}\n".format(" ".join(compile_args))
             report += "erro de compilação:{!s}".format(compile_err_output)
             report_writer(report,person)
