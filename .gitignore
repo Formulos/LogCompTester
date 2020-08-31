@@ -1,7 +1,7 @@
 .vscode
-Compilers/src/*
-Compilers/reports/*
-Compilers/utils/new-test/*
+Compilers/src/.
+Compilers/reports/.
+Compilers/utils/new-test/.
 Compilers/reports_backup/*
 Compilers/assembly/*
 
