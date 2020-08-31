@@ -72,6 +72,21 @@ def clone_repo(student_name, clone_path, git_path, code_version):
         print(clone_path)
         Repo.clone_from(git_path, clone_path)
 
+def check_dir():
+    if (os.getcwd()[-9:] != 'Compilers'):
+        print(
+            """----Cuidado----
+        esse codigo foi escrito para funcionar dentro da pasta Compiler,
+        varios caminhos estão relativos, portanto a chance de dar erro é alta.
+        pasta atual: {}
+        --------""".format(os.getcwd()))
+
+def create_report_scr():
+    if not (os.path.isdir('./reports')):
+        os.mkdir("./reports")
+    if not (os.path.isdir('./src')):
+        os.mkdir("./src")
+
 def delete_old_reports():
     filelist = [ f for f in os.listdir("reports/") if f.endswith(".txt") ]
     for f in filelist:
@@ -88,6 +103,8 @@ def report_writer(report,person):
         file.write(report)
 
 if __name__ == "__main__":
+    check_dir()
+    create_report_scr()
     delete_old_reports()
     delete_old_src()
     update_repos(read_git_url_json(), CODE_VERSION)
