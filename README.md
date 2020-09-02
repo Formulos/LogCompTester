@@ -73,7 +73,7 @@ Como o auto_test somente chama um subprocess para executar o código, o computad
 O auto_testes executa os testes para todos os alunos que não tem um report na pasta de reports.
 
 O auto_testes tambem tem algumas constantes no começo do código, elas são:
-1. acepeted_languages - lista das linguagem que esse programa foi testado com, se uma linguagem não estiver e estiver no json um erro é gerado.
+1. acepeted_languages - lista das linguagem que esse programa foi testado com, se uma linguagem não estiver aqui o codigo da um raise, já que isso nunca deveria acontecer.
 2. compile_languages - lista as linguagens que precisam de uma etapa de compilação antes da execução.
 3. maxtime - tempo maximo que cada teste deve rodar antes de dar um timeout em segundos (é um float).
 4. direct_input -(True ou False) diz se é passado o conteúdo de um teste, em vez do caminho dele, é usado para as versões baixas.
