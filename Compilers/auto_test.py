@@ -5,28 +5,30 @@ import re
 import json
 
 #Constantes
-acepeted_languages = ["python3","C++","C#"]
+accepted_languages = ["python3","rust","C++","C#"]
 compile_languages = ["C++","C#"]
-maxtime=5.0 #Timeout para cada teste, em segundos
-direct_input = False # passa o conteudo do arquivo como argumento (testes das versões baixas)
+maxtime=10.0 #Timeout para cada teste, em segundos
+direct_input = True # passa o conteudo do arquivo como argumento (testes das versões baixas)
 assembly = False
 assembly_test = 1
 
 def test_main(DIR,student):
     language = student["language"]
     person = student["student_username"]
+    repo = student["repository_name"]
+        
     args = student["run_args"]
     args = args.split()
     
-    if (language not in acepeted_languages):
-        raise Exception("language {!s} is not a acepeted language!".format(language))
+    if (language not in accepted_languages):
+        raise Exception("language {!s} is not a accepted language!".format(language))
     
     #diz a quantidade de testes, simplesmente pega a quantidade de arquivos na pasta e divide por dois
     size_test = (len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))]))//2
 
     src_file = "src/{!s}".format(person)
 
-    report = "Aluno: {!s}\n\n".format(person)
+    report = '{}/{}\n'.format(person,repo)
 
     failed_test = False
 

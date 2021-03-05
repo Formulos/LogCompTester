@@ -41,16 +41,16 @@ def update_repos(students, code_version):
             cur_repo.remotes.origin.pull("master")
         
 
-        checkout_version(clone_path, student_name, code_version)
+        checkout_version(clone_path, student_name, student_repo, code_version)
 
-def checkout_version(clone_path, student_name, code_version):
+def checkout_version(clone_path, student_name, student_repo, code_version):
     cur_repo = Repo(clone_path)
     
     try:
         latest_version = get_latest_minor_release(cur_repo, code_version)
     except:
         print("Could not get the latest version, does this student have any releases available?")
-        report_writer("Aluno: {!s}\nRelease {!s}.* não encontrada!\nVoce fez alguma Release?".format(student_name,code_version),student_name)
+        report_writer("{}/{}\nRelease {!s}.* não encontrada!\nVoce fez alguma Release?".format(student_name,student_repo,code_version),student_name)
         return
 
     print(f"checking out version {latest_version} from {student_name}")
@@ -58,7 +58,7 @@ def checkout_version(clone_path, student_name, code_version):
         Git(clone_path).checkout(latest_version)
     else:
         print(f"student {student_name} does not have this version available!")
-        report_writer("Aluno: {!s}\nRelease {!s}.* não encontrada!".format(student_name,code_version),student_name)
+        report_writer("{}/{}\nRelease {!s}.* não encontrada!".format(student_name,student_repo,code_version),student_name)
 
 def get_latest_minor_release(cur_repo, code_version):
     f_code_ver = re.sub("[a-zA-Z]+", "", code_version)
