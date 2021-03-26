@@ -3,22 +3,23 @@ import sys
 import subprocess
 import re
 import json
+import db.db_conn as db
+import issuer_pusher as ip
+import svg_report as sr
 
 #Constantes
-accepted_languages = ["python3","rust","C++","C#"]
-compile_languages = ["C++","C#"]
+accepted_languages = ["python","rustrust_cargo","C++","C#"]
+compile_languages = ["rustrust_cargo","C++","C#"]
 maxtime=10.0 #Timeout para cada teste, em segundos
 direct_input = True # passa o conteudo do arquivo como argumento (testes das versões baixas)
 assembly = False
 assembly_test = 1
 
-def test_main(DIR,student):
-    language = student["language"]
-    person = student["student_username"]
-    repo = student["repository_name"]
-        
-    args = student["run_args"]
+def test_main(DIR, git_username, repository, release, version):    
+    args = db.get_run_args(git_username, repository)
     args = args.split()
+
+    language = db.get_language(git_username, repository)
     
     if (language not in accepted_languages):
         raise Exception("language {!s} is not a accepted language!".format(language))
@@ -26,9 +27,9 @@ def test_main(DIR,student):
     #diz a quantidade de testes, simplesmente pega a quantidade de arquivos na pasta e divide por dois
     size_test = (len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))]))//2
 
-    src_file = "src/{!s}".format(person)
+    src_file = "src/{!s}".format(git_username)
 
-    report = '{}/{}\n'.format(person,repo)
+    report = '{}/{}\n'.format(git_username,repository)
 
     failed_test = False
 
@@ -36,7 +37,7 @@ def test_main(DIR,student):
 
 
     if language in compile_languages :
-        compile_args = student["compile_args"]
+        compile_args = db.get_compile_args(git_username, repository)
         compile_args = compile_args.split()
         compile_err_output = compile(src_file,compile_args)
 
@@ -44,7 +45,9 @@ def test_main(DIR,student):
             report += "Error: teste automatico não conseguiu compilar arquivo!\n"
             report += "parametros de compilação: {!s}\n".format(" ".join(compile_args))
             report += "erro de compilação:{!s}".format(compile_err_output)
-            report_writer(report,person)
+            
+            db.record_test_result(version_name = version, release_name = release, git_username = git_username, repository_name = repository, test_status = 'ERROR', issue_text = report)
+            ip.push_issue(git_username, repository, release, text = report)
             return True
 
     #caso seja a versão 3.0
@@ -132,7 +135,12 @@ def test_main(DIR,student):
                 failed_test = True
             
     if failed_test:
-        report_writer(report,person)
+        db.record_test_result(version_name = version, release_name = release, git_username = git_username, repository_name = repository, test_status = 'FAILED', issue_text = report)
+        ip.push_issue(git_username, repository, release, text = report)
+    else:
+        db.record_test_result(version_name = version, release_name = release, git_username = git_username, repository_name = repository, test_status = 'PASS', issue_text = '')
+
+    sr.RepoReport(git_username = git_username, repository_name = repository)
 
     return failed_test
 
@@ -177,30 +185,21 @@ def text_processor(text):
 
     return text2
 
-def report_writer(report,person):
-    person_file = "reports/{!s}.txt".format(person)
-    with open(person_file, 'w') as file:
-        file.write(report)
-
-
-def read_git_url_json():
-    with open("git_paths.json") as git_urls:
-        return json.load(git_urls)
-
-
 if __name__ == '__main__':
-    test_dir = "tests/{!s}_tests".format(sys.argv[1])
+
+    if len(sys.argv) < 4:
+        raise ValueError('USAGE: python3 auto_test.py GIT_USER REPOSITORY RELEASE')
     
+    git_username = sys.argv[1]
+    repository = sys.argv[2]
+    release = sys.argv[3]
+    version = release[0:4]
 
-    json_file = read_git_url_json()
+    test_folder = release[1:4]    
 
-
-    for student in json_file:
-        person = student["student_username"]
-        
-        
-        if (not os.path.exists("reports/{!s}.txt".format(person))):
-            print(person)
-            error = test_main(test_dir,student)
-            print("algum erro?: ",error)
-            print("\n")
+    test_dir = "tests/{!s}_tests".format(test_folder)
+    
+    print(git_username)
+    error = test_main(test_dir,git_username,repository,release,version)
+    print("algum erro?: ",error)
+    print("\n")
