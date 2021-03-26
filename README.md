@@ -13,64 +13,37 @@ Existem duas dependências além do python
 $ pip install gitpython
 ```
 
-2. Ghi usado para criar as issues ele precisa ser instalado e configurado:
+2. PyGithub usado para criar as issues ele precisa ser instalado:
 ```
-$ sudo apt install ghi
-$ ghi config --auth "username"
+$ pip install pygithub
 ```
+
+Para lançar a issue, crie um token no Github (https://github.com/settings/tokens) e o armazene em uma variável de ambiente chamada *GITHUB_TOKEN*.
 ## Configurando projeto:
 
-O codigo esta divido em três partes, fetch_releases.py, auto_test.py e issuer_pusher.py elas em ordem fazem pull de todos os repositórios, fazem todos os testes para os repositórios e criam as issues.
+O codigo esta divido em três partes, fetch_release.py, auto_test.py e autorun.py elas em ordem fazem pull de todos um repositório, fazem todos os testes para um repositório e faz ambas as partes anteriores automaticamente.
 
-O fetch_releases precisa de uma chave SSH configurada para se comunicar com o github é esperado que ela esteja no path "~/.ssh/id_rsa" que é o padrão.
+O fetch_release precisa de uma chave SSH configurada para se comunicar com o github é esperado que ela esteja no path "~/.ssh/id_rsa" que é o padrão.
 Um tutorial de como criar uma chave ssh para o github pode ser encontrado [aqui](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 
-Tanto o fetch_releases e o auto_test precisam de um git_paths configurado, o git_paths.json contém uma lista de dicionários com as informações de todos os alunos,
-ele tem os seguintes parâmetros:
-1. student_username - nome do usuario git do aluno
-2. repository_name - nome do repositorio que contem o compilador
-3. run_args - é os argumentos que um cmd precisa para executar o compilador
-4. compile_args - é os argumentos que um cmd precisa para compilar o compilador, so é necessário se linguagem precisar de compilação
-5. language - é a língua que o compilador está escrita
-
-Um exemplo pode ser visto a seguir:
-
-```
-[
-    {
-        "student_username": "lucassa3",
-        "repository_name" : "compilador",
-        "run_args" : "python3 somador.py",
-	"language" : "python3"
-    },
-    {
-        "student_username": "raulikeda",
-        "repository_name" : "rep",
-        "run_args" : "./out/compylador",
-        "compile_args": "dotnet build --nologo -o out",
-	"language" : "C#"
-    }
-]
-```
+Quando o auto_test identifica uma falha em algum teste, uma issue é criada automaticamente no repositório.
 
 ## Como rodar:
 
 Importante: todos os caminhos do código estão relativos, assim eles os programas precisam ser executados por um cmd que está dentro da pasta Compiler
 
-Ao executar o fetch_releases ele deleta todos os reports e os codigos dos alunos que estão em src
-1. Para puxar a release x.x de cada aluno, basta usar:
+Ao executar o fetch_releases ele deleta o repositório em src:
+1. Para puxar a release vx.x.x de um aluno e repositorio, basta usar:
 ```
-$ python fetch_releases.py git_paths.json 2.0
+$ python fetch_release.py git_username repository vx.x.x
 ```
-Se uma release não for encontrada é criado um report dentro da pasta reports
+Se a release não for encontrada, é criado uma issue
 
-2. Para rodar o os testes para todos os alunos
+2. Para rodar os testes para um aluno
 ```
-$ python3 auto_test.py php/2.4
+$ python3 auto_test.py git_username repository vx.x.x
 ```
 Como o auto_test somente chama um subprocess para executar o código, o computador utilizado precisa ser capaz de compilar e executar o código.
-
-O auto_testes executa os testes para todos os alunos que não tem um report na pasta de reports.
 
 O auto_testes tambem tem algumas constantes no começo do código, elas são:
 1. acepeted_languages - lista das linguagem que esse programa foi testado com, se uma linguagem não estiver aqui o codigo da um raise, já que isso nunca deveria acontecer.
@@ -80,12 +53,8 @@ O auto_testes tambem tem algumas constantes no começo do código, elas são:
 5. assembly - (True ou False) usado para testar a versão assembly, somente roda o arquivo de teste para cada aluno, e mostra um erro no terminal se ouve um erro na execução do teste, ele não gera reports automáticos.
 6. assembly_test - o número do teste de assembly, geralmente só vai ter 1, é usado somente se assembly = True.
 
-para executar o issuer_pusher.py é só necessário rodar:
-```
-python3 issuer_pusher.py
-```
-Ele pega o conteúdo de todos os reports e cria uma issue com o nome autoIssue para cada aluno, se um report não existe não é criado uma issue para o aluno.
-É um código simples que somente chama o ghi na pasta src/aluno e passa como stdin o conteúdo de report.
+O auto_test pega o conteúdo de um report de erro e cria uma issue com o nome autoIssue para cada aluno, se um report não existe não é criado uma issue para o aluno.
+O resultado do teste também é armazenado na base sqlite3.
 
 
 ## Criando novos testes:
