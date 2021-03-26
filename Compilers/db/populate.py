@@ -1,6 +1,6 @@
 import db_conn as db
 
-sql_file = open('populate2.sql')
+sql_file = open('populate.sql')
 
 sql = sql_file.read()
 
