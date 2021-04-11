@@ -133,5 +133,3 @@ class TagReport():
                     '    <text x="{}" y="15" fill="#010101" fill-opacity=".3">{}</text><text x="{}" y="14">{}</text>\n'.format(xtexttest, self.teststatus, xtexttest, self.teststatus) + \
                     '</g>\n'
         return(self.code)
-
-RepoReport('macielcalebe', 'comp1')
