@@ -7,10 +7,11 @@ import json
 #Constantes
 accepted_languages = ["python3","rust","C++","C#"]
 compile_languages = ["C++","C#"]
-maxtime=10.0 #Timeout para cada teste, em segundos
+maxtime=30.0 #Timeout para cada teste, em segundos
 direct_input = True # passa o conteudo do arquivo como argumento (testes das versões baixas)
 assembly = False
 assembly_test = 1
+extension = ".txt"
 
 def test_main(DIR,student):
     language = student["language"]
@@ -49,7 +50,7 @@ def test_main(DIR,student):
 
     #caso seja a versão 3.0
     if assembly:
-        test_file = os.path.abspath(DIR +"/teste{!s}.php".format(assembly_test))
+        test_file = os.path.abspath(DIR +"/teste{!s}".format(assembly_test) + extension)
         #stdin_file = os.path.abspath(DIR +"/inputs/input{!s}.txt".format(i))
         #sol_file = DIR +"/sol{!s}.txt".format(i)
         args[-1] = test_file
@@ -64,9 +65,9 @@ def test_main(DIR,student):
             return True
     
     for i in range(1,size_test + 1):
-        test_file = os.path.abspath(DIR +"/teste{!s}.php".format(i))
+        test_file = os.path.abspath(DIR +"/teste{!s}".format(i) + extension)
         stdin_file = os.path.abspath(DIR +"/inputs/input{!s}.txt".format(i))
-        sol_file = DIR +"/sol{!s}.txt".format(i)
+        sol_file = DIR +"/sol{!s}".format(i) + extension
 
 
         if direct_input:
