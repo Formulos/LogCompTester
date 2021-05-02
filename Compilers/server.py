@@ -33,4 +33,8 @@ def api_webhook():
         
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run(host='0.0.0.0', port=5000, threaded=True)
+=======
+    app.run(host='0.0.0.0', port=5000, threaded=True)
+>>>>>>> 307c35e2b89f37051377bd4998845bb75bdb6eb0
