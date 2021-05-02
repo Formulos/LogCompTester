@@ -1,4 +1,4 @@
-# MonitoriaLogComp
+# Compiler Automatic Tester
 Repositório de ferramentas de avaliação de compiladores feitos na materia
 
 
