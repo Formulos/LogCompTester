@@ -55,8 +55,14 @@ def check_dir():
 def create_src(git_username):
     if not (os.path.isdir('./src')):
         os.mkdir("./src")
+<<<<<<< HEAD
     if not (os.path.isdir(os.path.join('./src', git_username))):
         os.mkdir(os.path.join('./src', git_username))
+=======
+    user_path = os.path.join('./src', git_username)
+    if not (os.path.isdir(user_path)):
+        os.mkdir(user_path)
+>>>>>>> 9dac38e223b3b67a1d5a8ce542ec1ad1869915c3
 
 def delete_old_src(git_username, repository):
     rep = os.path.join("src/", git_username, repository)
