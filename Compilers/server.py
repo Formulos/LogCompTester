@@ -1,6 +1,7 @@
 from flask import Flask, request, abort, json
 from git import Repo, Git
 from github import Github
+from flask import send_file
 import json
 import os
 import sys
@@ -13,7 +14,7 @@ app = Flask(__name__)
 @app.route('/webhook', methods=['POST'])
 def api_webhook():
     if request.method == 'POST':
-        if request.headers['Content-Type'] == 'application/json':
+        if request.content_type == 'application/json':
             with open('payload.json', 'w') as output:
                 json.dump(request.json, output)
             if "release" in request.json:
@@ -21,20 +22,26 @@ def api_webhook():
                     git_username = request.json["release"]["author"]["login"]
                     repository_name = request.json["repository"]["name"]
                     version = request.json["release"]["tag_name"]
+                    print(f'git_username: {git_username}, repository_name: {repository_name}, version: {version}')
+                    os.system(f'cd ~/LogCompTester/Compilers;python3 full_proc.py {git_username} {repository_name} {version} &')
             else:
                 git_username = request.json["repository"]["owner"]["login"]
                 repository_name = request.json["repository"]["name"]
                 version = request.json["ref"]
-            print(f'git_username: {git_username}, repository_name: {repository_name}, version: {version}')
-            os.system(f'python3 full_proc.py {git_username} {repository_name} {version} &')
+                print(f'git_username: {git_username}, repository_name: {repository_name}, version: {version}')
+                os.system(f'cd ~/LogCompTester/Compilers;python3 full_proc.py {git_username} {repository_name} {version} &')
         return 'success', 200
     else:
         abort(400)
+
+@app.route('/')
+def test():
+    return 'Hello World'
+
+@app.route('/svg/<user>/<repo>/', methods=['GET'])
+def svg(user, repo):
+    return send_file(f'./img/compiler/{user}_{repo}.svg')
         
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     app.run(host='0.0.0.0', port=5000, threaded=True)
-=======
-    app.run(host='0.0.0.0', port=5000, threaded=True)
->>>>>>> 307c35e2b89f37051377bd4998845bb75bdb6eb0
