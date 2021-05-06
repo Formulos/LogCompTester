@@ -5,20 +5,22 @@ import re
 import json
 import db.db_conn as db
 import issuer_pusher as ip
-import svg_report as sr
 
 #Constantes
-accepted_languages = ["python","rustrust_cargo","C++","C#"]
-compile_languages = ["rustrust_cargo","C++","C#"]
-maxtime=10.0 #Timeout para cada teste, em segundos
-direct_input = True # passa o conteudo do arquivo como argumento (testes das versões baixas)
+accepted_languages = ["python","rust_cargo","C++","C#"]
+compile_languages = ["C++","C#"]
+maxtime = 30.0 #Timeout para cada teste, em segundos
 assembly = False
 assembly_test = 1
-extension = ".txt"
 
 def test_main(DIR, git_username, repository, release, version):    
     args = db.get_run_args(git_username, repository)
     args = args.split()
+
+    direct_input = db.get_direct_input(version)
+    extension = db.get_extension(version)
+    print(direct_input)
+    print(extension)
 
     language = db.get_language(git_username, repository)
     
@@ -140,8 +142,6 @@ def test_main(DIR, git_username, repository, release, version):
         ip.push_issue(git_username, repository, release, text = report)
     else:
         db.record_test_result(version_name = version, release_name = release, git_username = git_username, repository_name = repository, test_status = 'PASS', issue_text = '')
-
-    sr.RepoReport(git_username = git_username, repository_name = repository)
 
     return failed_test
 
