@@ -92,7 +92,7 @@ CREATE VIEW release_status AS
                      THEN 'NOT_FOUND'
                   ELSE trs.test_status
               END test_status,
-              CASE trs.test_status is null OR trs.test_status = 'ERROR'
+              CASE trs.test_status is null OR trs.test_status = 'ERROR' OR trs.test_status = 'FAILED'
                   WHEN 1
                      THEN CASE date('now') > ver.date_to
                              WHEN 1
