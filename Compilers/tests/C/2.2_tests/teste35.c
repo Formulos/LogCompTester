@@ -1,0 +1,4 @@
+{
+    x = readln();
+    println(x);
+}
