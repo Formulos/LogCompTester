@@ -78,3 +78,19 @@ def get_language(git_username, repository):
 
     res = getResults(sql)
     return res[0][0]
+
+def get_direct_input(version_name):
+    sql = 'SELECT direct_input ' + \
+            'FROM version ver ' + \
+           'WHERE ver.version_name = "{}" '.format(version_name)
+
+    res = getResults(sql)
+    return res[0][0]
+
+def get_extension(version_name):
+    sql = 'SELECT extension ' + \
+            'FROM version ver ' + \
+           'WHERE ver.version_name = "{}" '.format(version_name)
+
+    res = getResults(sql)
+    return res[0][0]

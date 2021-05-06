@@ -15,7 +15,6 @@ class RepoReport:
         self.repository_name = repository_name
 
         self.db_update()
-        self.save()
 
     def db_update(self):
         self.taglist = []

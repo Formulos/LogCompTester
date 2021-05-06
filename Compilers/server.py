@@ -8,6 +8,7 @@ import sys
 import shutil
 import re
 import subprocess
+import svg_report as sr
 
 app = Flask(__name__)
 
@@ -40,7 +41,8 @@ def test():
 
 @app.route('/svg/<user>/<repo>/', methods=['GET'])
 def svg(user, repo):
-    return send_file(f'./img/compiler/{user}_{repo}.svg')
+    report = sr.RepoReport(git_username = user, repository_name = repo)
+    return report.compile()
         
 
 if __name__ == '__main__':

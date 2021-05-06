@@ -42,6 +42,8 @@ CREATE TABLE repository (
 cursor.execute("""
 CREATE TABLE version (
     version_name TEXT PRIMARY KEY NOT NULL,
+    direct_input INTEGER NOT NULL,
+    extension TEXT NOT NULL,
     date_from DATETIME NOT NULL,
     date_to   DATETIME NOT NULL
 );
