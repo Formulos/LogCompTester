@@ -12,17 +12,15 @@ compile_languages = ["C++","C#"]
 maxtime = 30.0 #Timeout para cada teste, em segundos
 assembly = False
 assembly_test = 1
+#extension = '.txt'
 
 def test_main(DIR, git_username, repository, release, version):    
     args = db.get_run_args(git_username, repository)
     args = args.split()
 
+    language = db.get_language(git_username, repository)
     direct_input = db.get_direct_input(version)
     extension = db.get_extension(version)
-    print(direct_input)
-    print(extension)
-
-    language = db.get_language(git_username, repository)
     
     if (language not in accepted_languages):
         raise Exception("language {!s} is not a accepted language!".format(language))
@@ -196,7 +194,11 @@ if __name__ == '__main__':
     release = sys.argv[3]
     version = release[0:4]
 
-    test_folder = release[1:4]    
+    test_folder = release[1:4]
+
+    direct_input = db.get_direct_input(version)
+    if not direct_input:
+        test_folder = 'C/{}'.format(release[1:4])
 
     test_dir = "tests/{!s}_tests".format(test_folder)
     
