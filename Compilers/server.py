@@ -1,4 +1,4 @@
-from flask import Flask, request, abort, json
+from flask import Flask, request, abort, json, Response
 from git import Repo, Git
 from github import Github
 from flask import send_file
@@ -11,6 +11,8 @@ import subprocess
 import svg_report as sr
 
 app = Flask(__name__)
+
+os.chdir('/home/ubuntu/LogCompTester/Compilers')
 
 @app.route('/webhook', methods=['POST'])
 def api_webhook():
@@ -42,8 +44,9 @@ def test():
 @app.route('/svg/<user>/<repo>/', methods=['GET'])
 def svg(user, repo):
     report = sr.RepoReport(git_username = user, repository_name = repo)
-    return report.compile()
+    svg = report.compile()
+    return Response(response=svg, status=200, mimetype="image/svg+xml")
         
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    app.run(host='0.0.0.0', port=80, threaded=True)
