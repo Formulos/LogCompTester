@@ -9,13 +9,19 @@ import shutil
 import re
 import subprocess
 import svg_report as sr
+import time
+import hashlib
 
 app = Flask(__name__)
 
-os.chdir('/home/ubuntu/LogCompTester/Compilers')
+
+BASE_DIR = '/home/ubuntu/LogCompTester/Compilers'
+
+os.chdir(BASE_DIR)
 
 @app.route('/webhook', methods=['POST'])
 def api_webhook():
+    os.chdir(BASE_DIR)
     if request.method == 'POST':
         if request.content_type == 'application/json':
             with open('payload.json', 'w') as output:
@@ -26,13 +32,13 @@ def api_webhook():
                     repository_name = request.json["repository"]["name"]
                     version = request.json["release"]["tag_name"]
                     print(f'git_username: {git_username}, repository_name: {repository_name}, version: {version}')
-                    os.system(f'cd ~/LogCompTester/Compilers;python3 full_proc.py {git_username} {repository_name} {version} &')
+                    os.system(f'python3 full_proc.py {git_username} {repository_name} {version} &')
             else:
                 git_username = request.json["repository"]["owner"]["login"]
                 repository_name = request.json["repository"]["name"]
                 version = request.json["ref"]
                 print(f'git_username: {git_username}, repository_name: {repository_name}, version: {version}')
-                os.system(f'cd ~/LogCompTester/Compilers;python3 full_proc.py {git_username} {repository_name} {version} &')
+                os.system(f'python3 full_proc.py {git_username} {repository_name} {version} &')
         return 'success', 200
     else:
         abort(400)
@@ -45,7 +51,16 @@ def test():
 def svg(user, repo):
     report = sr.RepoReport(git_username = user, repository_name = repo)
     svg = report.compile()
-    return Response(response=svg, status=200, mimetype="image/svg+xml")
+    resp = Response(response=svg, status=200, mimetype="image/svg+xml")
+    resp.headers['Cache-Control'] = 'no-cache'
+    resp.headers['Pragma'] = 'no-cache'
+
+    now = time.strftime("%Y %m %d %H %M")
+    txt = '{} {} {}'.format(user, repo, now).encode('utf-8')
+    etag = hashlib.sha1(txt).hexdigest()
+    resp.headers['ETag'] = etag
+    
+    return resp
         
 
 if __name__ == '__main__':
