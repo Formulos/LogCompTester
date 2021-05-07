@@ -28,7 +28,7 @@ def test_main(DIR, git_username, repository, release, version):
     #diz a quantidade de testes, simplesmente pega a quantidade de arquivos na pasta e divide por dois
     size_test = (len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))]))//2
 
-    src_file = "src/{!s}".format(git_username)
+    src_file = "src/{!s}/{!s}".format(git_username, repository)
 
     report = '{}/{}\n'.format(git_username,repository)
 
@@ -136,6 +136,7 @@ def test_main(DIR, git_username, repository, release, version):
                 failed_test = True
             
     if failed_test:
+        report = report.replace('"', '\'')
         db.record_test_result(version_name = version, release_name = release, git_username = git_username, repository_name = repository, test_status = 'FAILED', issue_text = report)
         ip.push_issue(git_username, repository, release, text = report)
     else:
