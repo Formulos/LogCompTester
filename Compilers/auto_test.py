@@ -148,7 +148,7 @@ def assertEquals(var1, var2):
     return var1 == var2
 
 def get_text(read_file):
-    with open(read_file, 'r') as file:
+    with open(read_file, 'r', encoding='utf8') as file:
         data = file.read()
     return data
 
