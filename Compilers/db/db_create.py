@@ -94,7 +94,7 @@ CREATE VIEW release_status AS
               END test_status,
               CASE trs.test_status is null OR trs.test_status = 'ERROR' OR trs.test_status = 'FAILED'
                   WHEN 1
-                     THEN CASE date('now') > ver.date_to
+                     THEN CASE datetime('now', 'localtime') > ver.date_to
                              WHEN 1
                                 THEN 'DELAYED'
                              ELSE 'ON_TIME'
