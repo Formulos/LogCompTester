@@ -136,7 +136,7 @@ def test_main(DIR, git_username, repository, release, version):
                 failed_test = True
             
     if failed_test:
-        report = report.replace('"', '\'')
+        report = report.replace('"', '""')
         db.record_test_result(version_name = version, release_name = release, git_username = git_username, repository_name = repository, test_status = 'FAILED', issue_text = report)
         ip.push_issue(git_username, repository, release, text = report)
     else:

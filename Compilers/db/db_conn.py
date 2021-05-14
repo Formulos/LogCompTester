@@ -52,13 +52,6 @@ def record_test_result(version_name, release_name, git_username, repository_name
 
 
 def get_compile_args(git_username, repository):
-    # sql = 'SELECT ????? ' + \
-    #         'FROM repository rep ' + \
-    #        'WHERE rep.git_username = "{}" '.format(git_username) + \
-    #          'AND rep.repository_name = "{}" '.format(repository_name)
-
-    # res = getResults(sql)
-    # return(res[0])
     return ''
 
 def get_run_args(git_username, repository):
@@ -94,3 +87,4 @@ def get_extension(version_name):
 
     res = getResults(sql)
     return res[0][0]
+    
