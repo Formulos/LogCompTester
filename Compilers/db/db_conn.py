@@ -45,8 +45,8 @@ def get_repo_release_status(git_username, repository):
 
 def record_test_result(version_name, release_name, git_username, repository_name, test_status, issue_text):
 
-    sql =  'INSERT INTO test_result (version_name, release_name, git_username, repository_name, date_run, test_status, issue_text) ' + \
-        'VALUES("{}", "{}", "{}", "{}", date("now"), "{}", "{}");'.format(version_name, release_name, git_username, repository_name, test_status, issue_text)
+    sql =  "INSERT INTO test_result (version_name, release_name, git_username, repository_name, date_run, test_status, issue_text) " + \
+        "VALUES('{}', '{}', '{}', '{}', date('now'), '{}', '{}');".format(version_name, release_name, git_username, repository_name, test_status, issue_text)
 
     executeCommitQuery(sql)
 
@@ -87,4 +87,3 @@ def get_extension(version_name):
 
     res = getResults(sql)
     return res[0][0]
-    
