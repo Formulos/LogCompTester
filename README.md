@@ -4,6 +4,12 @@ Instruções para o uso do servidor para correção automática de compiladores.
 
 ## Cadastro do webhook no servidor
 
+### Dependências:
+
+- gitpython
+- pygithub
+- flask
+
 ### Instalação
 
 Para configurar o servidor para ouvir aos webhooks:
