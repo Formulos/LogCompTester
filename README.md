@@ -6,6 +6,8 @@ Instruções para o uso do servidor para correção automática de compiladores.
 
 ### Dependências:
 
+Instalar as seguintes dependências do python:
+
 - gitpython
 - pygithub
 - flask
