@@ -1,0 +1,5 @@
+int main(){
+    if("a"){
+        println(1);
+    }
+}
